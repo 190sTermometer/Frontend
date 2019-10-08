@@ -6,28 +6,39 @@ import { Line } from "vue-chartjs";
 export default {
     name: "Chart",
     extends: Line,
-    props: { },
+    props: {},
     data: () => ({
         chartdata: {
-            labels: ['January', 'February'],
-            datasets: [{
-                label: "Dataset",
-                backgroundColor: "rgba(255, 99, 132, 0.1)",
-                borderColor: "rgba(255, 99, 132, 1)",
-                borderWidth: 0.7,
-                data: Array.from({length: 40}, () => Math.floor(Math.random() * 40))
-            }]
+            labels: ["January", "February"],
+            datasets: [
+                {
+                    label: "Dataset",
+                    backgroundColor: "rgba(255, 99, 132, 0.1)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 0.7,
+                    data: Array.from({ length: 40 }, () =>
+                        Math.floor(Math.random() * 40)
+                    )
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                xAxes: [{
-                    display: false
-                }],
-                yAxes: [{
-                    display: false
-                }]
+                xAxes: [
+                    {
+                        display: false,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                ],
+                yAxes: [
+                    {
+                        display: false
+                    }
+                ]
             },
             legend: {
                 display: false
@@ -51,5 +62,5 @@ export default {
     computed: {},
     created() {},
     methods: {}
-}
+};
 </script>

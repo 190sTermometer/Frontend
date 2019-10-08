@@ -4,16 +4,15 @@ import router from "./router";
 import store from "./store";
 
 import vuetify from "./plugins/vuetify";
-//import chartkick from "./plugins/chartkick";
+import { sync } from "vuex-router-sync";
 
-import "@babel/polyfill";
+sync(store, router);
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  //chartkick,
-  render: h => h(App)
+    router,
+    store,
+    vuetify,
+    render: h => h(App)
 }).$mount("#app");

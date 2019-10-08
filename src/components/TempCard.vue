@@ -3,7 +3,6 @@
         href="#"
         class="ma-3"
         width="270"
-        height="200"
         @mouseover="hover = true"
         @mouseleave="hover = false"
         :to="'/info/' + this.name">
