@@ -6,7 +6,7 @@
     </div>
     <router-view />
   </div>
-  <div></div>
+  <div>hjehje</div>
 </template>
 
 <style>
