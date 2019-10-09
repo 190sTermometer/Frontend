@@ -1,66 +1,51 @@
-<Line :chartdata="chartdata" :options="options"/>
-
 <script>
-import { Line } from "vue-chartjs";
+import { Line, mixins } from "vue-chartjs";
+const { reactiveProp } = mixins;
 
 export default {
-    name: "Chart",
-    extends: Line,
-    props: {},
-    data: () => ({
-        chartdata: {
-            labels: ["January", "February"],
-            datasets: [
-                {
-                    label: "Dataset",
-                    backgroundColor: "rgba(255, 99, 132, 0.1)",
-                    borderColor: "rgba(255, 99, 132, 1)",
-                    borderWidth: 0.7,
-                    data: Array.from({ length: 40 }, () =>
-                        Math.floor(Math.random() * 40)
-                    )
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [
-                    {
-                        display: false,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                ],
-                yAxes: [
-                    {
-                        display: false
-                    }
-                ]
-            },
-            legend: {
-                display: false
-            },
-            layout: {
-                padding: 0
-            },
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return tooltipItem.yLabel;
-                    }
-                }
+  name: "Chart",
+  extends: Line,
+  props: {},
+  mixins: [reactiveProp],
+  data: () => ({
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [
+          {
+            display: false
+          }
+        ],
+        yAxes: [
+          {
+            display: false,
+            ticks: {
+              beginAtZero: true
             }
+          }
+        ]
+      },
+      legend: {
+        display: false
+      },
+      layout: {
+        padding: {
+          top: 160
         }
-    }),
-    mounted() {
-        console.log("dd");
-        this.renderChart(this.chartdata, this.options);
-    },
-    computed: {},
-    created() {},
-    methods: {}
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
+      }
+    }
+  }),
+  mounted() {
+    this.renderChart(this.chartData, this.options);
+  },
+  computed: {},
+  created() {},
+  methods: {}
 };
 </script>

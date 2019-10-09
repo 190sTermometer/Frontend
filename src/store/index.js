@@ -9,11 +9,9 @@ import state from "./state";
 Vue.use(Vuex);
 
 // Create a new store
-const store = new Vuex.Store({
-    actions,
-    getters,
-    mutations,
-    state
+export default new Vuex.Store({
+  actions,
+  getters,
+  mutations,
+  state
 });
-
-export default store;

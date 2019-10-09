@@ -1,42 +1,63 @@
 <template>
-    <v-card
-        href="#"
-        class="ma-3"
-        width="270"
-        @mouseover="hover = true"
-        @mouseleave="hover = false"
-        :to="'/info/' + this.name">
-        <v-card-title>{{name}}</v-card-title>
-        <Chart />
-    </v-card>
+  <v-card
+    href="#"
+    class="ma-3"
+    width="300"
+    @mouseover="hover = true"
+    @mouseleave="hover = false"
+    :to="'/info/' + this.name"
+  >
+    <v-card-title>{{name}}</v-card-title>
+    <Chart :chart-data="datacollection" />
+  </v-card>
 </template>
 
 <script>
 import Chart from "@/components/Chart";
 
 export default {
-    name: "TempCard",
-    props: {
-        name: String
-    },
-    data: () => ({
-        hover: false,
-    }),
-    computed: {
-        cardStyle() {
-            return {
-                transform: `scale(${this.hover ? 1.1 : 1})`,
-                transition: "all 0.2s ease"
-            };
-        }
-    },
-    created() {},
-    methods: {},
-    components: {
-        Chart
+  name: "TempCard",
+  props: {
+    name: String
+  },
+  data: () => ({
+    hover: false,
+    datacollection: null
+  }),
+  computed: {
+    cardStyle() {
+      return {
+        transform: `scale(${this.hover ? 1.1 : 1})`,
+        transition: "all 0.2s ease"
+      };
     }
+  },
+  created() {
+    this.fillData();
+  },
+  mounted() {
+    this.fillData();
+  },
+  methods: {
+    fillData() {
+      this.datacollection = {
+        labels: Array(10),
+        datasets: [
+          {
+            label: "Dataset",
+            backgroundColor: "rgba(255, 99, 132, 0.1)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 2,
+            data: Array.from({ length: 10 }, () =>
+              Math.floor(Math.random() * 40)
+            )
+          }
+        ]
+      };
+    }
+  },
+  components: {
+    Chart
+  }
 };
 </script>
-
-<style scoped>
-</style>
