@@ -2,7 +2,6 @@
   <!-- https://dsx.weather.com/util/image/v/Euro-temps_1280x720_30897733728.jpg?v=at&w=1280&h=720&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0 -->
   <v-navigation-drawer
     id="app-drawer"
-    v-model="inputValue"
     src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg"
     app
     color="grey darken-2"
@@ -17,15 +16,7 @@
     </template>
 
     <v-list-item two-line>
-      <v-list-item-avatar color="white">
-        <v-img
-          src="https://agencegenevievechampagne.com/wp-content/uploads/2019/03/default-non-user-no-photo-1.jpg"
-          height="34"
-          contain
-        />
-      </v-list-item-avatar>
-
-      <v-list-item-title class="title">Olles Väder</v-list-item-title>
+      <v-list-item-title class="title font-weight-regular">Olles Väder</v-list-item-title>
     </v-list-item>
 
     <v-divider class="mx-3 mb-3" />
@@ -43,6 +34,19 @@
 
         <v-list-item-title v-text="link.view" />
       </v-list-item>
+
+      <v-list-group prepend-icon="settings" no-action>
+        <template v-slot:activator>
+          <v-list-item-title>Devices</v-list-item-title>
+        </template>
+
+        <v-list-item v-for="i in devices" :key="i.Name" link>
+          <v-list-item-title>{{getName(i.Name)}}</v-list-item-title>
+          <!--<v-list-item-icon>
+            <v-icon>person</v-icon>
+          </v-list-item-icon>-->
+        </v-list-item>
+      </v-list-group>
     </v-list>
 
     <template v-slot:append></template>
@@ -72,14 +76,15 @@ export default {
         transition: "all 0.2s ease"
       };
     },
-    inputValue: {
-      get() {
-        return this.$store.state.drawer;
-      },
-      set(val) {}
+    devices() {
+      return this.$store.getters.knownDevices;
     }
   },
   created() {},
-  methods: {}
+  methods: {
+    getName(name) {
+      return name.split("_").join(" ");
+    }
+  }
 };
 </script>

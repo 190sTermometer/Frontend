@@ -87,7 +87,15 @@ export default new Vuex.Store({
   },
   getters: {
     unknownDevices: state => state.unknownDevices,
-    knownDevices: state => state.knownDevices,
+    knownDevices: state =>
+      state.knownDevices.filter(
+        i =>
+          i.Temperature.length > 3 &&
+          i.Temperature.reduce((a, b) => a + b, 0) / i.Temperature.length >
+            10 &&
+          /^[ -~\t\n\r]+$/.test(i.Name) &&
+          !i.Temperature.includes(0)
+      ),
     currentDevice: state => state.currentDevice,
     loading: state => state.loading
   }
