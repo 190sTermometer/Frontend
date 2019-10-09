@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import axios from "axios";
-import { stat } from "fs";
 
 Vue.use(Vuex);
 
@@ -61,31 +60,22 @@ export default new Vuex.Store({
             data = response.data.Items.Items;
             commit("getKnownDevices", data);
             resolve(data);
-          })
-          .catch(error => {
-            console.log(error);
           });
       });
     },
     getDevice: ({ commit }, macAddress) => {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         let data = "";
 
-        // Samuel device = ZZZZ_enhet
         axios
           .get(
             "https://y6ituq9hnf.execute-api.us-east-1.amazonaws.com/test/device/data?name=" +
               macAddress
           )
           .then(response => {
-            console.log(response);
-
-            data = response.data;
+            data = response.data.data;
             commit("getDevice", data);
-            resolve(response.data);
-          })
-          .catch(error => {
-            reject(error);
+            resolve(data);
           });
       });
     },

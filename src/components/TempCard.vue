@@ -7,7 +7,7 @@
     @mouseleave="hover = false"
     :to="'/info/' + this.device.Name"
   >
-    <v-card-title>{{device.Name}}</v-card-title>
+    <v-card-title>{{getName()}}</v-card-title>
     <Chart :chart-data="datacollection" />
   </v-card>
 </template>
@@ -34,7 +34,6 @@ export default {
   },
   created() {
     this.fillData();
-    console.log(this.device);
   },
   mounted() {
     this.fillData();
@@ -53,6 +52,9 @@ export default {
           }
         ]
       };
+    },
+    getName() {
+      return this.device.Name.split("_").join(" ");
     }
   },
   components: {

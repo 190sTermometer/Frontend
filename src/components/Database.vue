@@ -33,7 +33,8 @@ export default {
           i.Temperature.length > 3 &&
           i.Temperature.reduce((a, b) => a + b, 0) / i.Temperature.length >
             10 &&
-          /^[ -~\t\n\r]+$/.test(i.Name)
+          /^[ -~\t\n\r]+$/.test(i.Name) &&
+          !i.Temperature.includes(0)
       );
     }
   }

@@ -1,59 +1,60 @@
 <template>
-    <div id="app">
-        <v-app id="inspire">
-            <v-content>
-            <v-container
-                fluid
-                fill-height
-            >
-                <v-layout
-                align-center
-                justify-center
-                >
-                <v-flex
-                    xs12
-                    sm8
-                    md4
-                >
-                    <v-card class="elevation-12">
-                    <v-toolbar
-                        color="primary"
-                        dark
-                        flat
-                    >
-                        <v-toolbar-title>Logga in på Olles Väderstation</v-toolbar-title>
-                        <v-icon></v-icon>
-                        <v-spacer></v-spacer>
-                        <v-tooltip bottom>
-                        </v-tooltip>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form>
-                        <v-text-field
-                            label="Login"
-                            name="login"
-                            prepend-icon="person"
-                            type="text"
-                        ></v-text-field>
+  <v-container fill-height fluid>
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <material-card color="green" title="Edit Profile" text="Complete your profile">
+          <v-form>
+            <v-container class="py-0">
+              <v-row>
+                <v-col cols="12" md="4">
+                  <v-text-field class="purple-input" label="User Name" />
+                </v-col>
 
-                        <v-text-field
-                            id="password"
-                            label="Password"
-                            name="password"
-                            prepend-icon="lock"
-                            type="password"
-                        ></v-text-field>
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary">Login</v-btn>
-                    </v-card-actions>
-                    </v-card>
-                </v-flex>
-                </v-layout>
+                <v-col cols="12" md="4">
+                  <v-text-field label="Email Address" class="purple-input" />
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field label="First Name" class="purple-input" />
+                </v-col>
+
+                <v-col cols="12" md="6">
+                  <v-text-field label="Last Name" class="purple-input" />
+                </v-col>
+
+                <v-col cols="12">
+                  <v-text-field label="Adress" class="purple-input" />
+                </v-col>
+
+                <v-col cols="12" md="4">
+                  <v-text-field label="City" class="purple-input" />
+                </v-col>
+
+                <v-col cols="12" md="4">
+                  <v-text-field label="Country" class="purple-input" />
+                </v-col>
+
+                <v-col cols="12" md="4">
+                  <v-text-field class="purple-input" label="Postal Code" type="number" />
+                </v-col>
+
+                <v-col cols="12">
+                  <v-textarea
+                    class="purple-input"
+                    label="About Me"
+                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                  />
+                </v-col>
+
+                <v-col cols="12" class="text-right">
+                  <v-btn color="green">Update Profile</v-btn>
+                </v-col>
+              </v-row>
             </v-container>
-            </v-content>
-        </v-app>
-    </div>
+          </v-form>
+        </material-card>
+      </v-col>
+      <v-col cols="12" md="4"></v-col>
+    </v-row>
+  </v-container>
 </template>

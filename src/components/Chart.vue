@@ -5,21 +5,26 @@ const { reactiveProp } = mixins;
 export default {
   name: "Chart",
   extends: Line,
-  props: {},
+  props: {
+    detailed: Boolean
+  },
   mixins: [reactiveProp],
   data: () => ({
-    options: {
+    options: {}
+  }),
+  mounted() {
+    this.options = {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         xAxes: [
           {
-            display: false
+            display: this.detailed
           }
         ],
         yAxes: [
           {
-            display: false,
+            display: this.detailed,
             ticks: {
               beginAtZero: true
             }
@@ -31,17 +36,16 @@ export default {
       },
       layout: {
         padding: {
-          top: 160
+          top: this.detailed ? 0 : 160
         }
       },
       elements: {
         point: {
-          radius: 0
+          radius: this.detailed ? 2 : 0
         }
       }
-    }
-  }),
-  mounted() {
+    };
+
     this.renderChart(this.chartData, this.options);
   },
   computed: {},

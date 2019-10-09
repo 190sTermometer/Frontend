@@ -2,17 +2,20 @@ export default [
   {
     path: "/",
     name: "home",
-    view: "Home"
+    view: "Home",
+    icon: "dashboard"
   },
   {
     path: "/login",
     name: "login",
-    view: "Login"
+    view: "Login",
+    icon: "person"
   },
   {
-    path: "/Info/:id",
+    path: "/Info/:name",
     name: "Info",
     props: true,
-    view: "Info"
+    view: "Info",
+    icon: "description"
   }
 ];

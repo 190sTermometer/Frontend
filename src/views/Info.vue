@@ -1,45 +1,58 @@
 <template>
-  <v-layout>
-    <v-card xs2>
-      <v-flex v-for="(item, index) in TempData.data.UpdatedAt" :key="index">
-        <h4>{{item}}</h4>
-      </v-flex>
-    </v-card>
-    <v-card xs2>
-      <v-flex v-for="(item, index) in TempData.data.Temperature" :key="index">
-        <h4>{{item}}</h4>
-      </v-flex>
-    </v-card>
-    <v-card xs2>
-      <v-flex v-for="(item, index) in TempData.data.Humidity" :key="index">
-        <h4>{{item}}</h4>
-      </v-flex>
-    </v-card>
-  </v-layout>
+  <v-container>
+    <Loader v-if="loading" />
+    <h1>{{getName()}}</h1>
+    <v-row m="20">
+      <Chart detailed :chart-data="datacollection" />
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import Chart from "@/components/Chart";
+import Loader from "@/components/Loader";
 
 const axios = require("axios");
 
 export default {
+  props: {
+    name: String
+  },
   data: () => ({
-    TempData: ""
+    loading: true,
+    data: [],
+    datacollection: null
   }),
-  created() {
-    let date = new Date();
-    console.log("Nu är den skapad " + date.toLocaleTimeString);
-    this.fetch();
+  mounted() {
+    this.$store.dispatch("getDevice", this.name).then(response => {
+      this.loading = false;
+      this.data = response;
+
+      this.fillData();
+    });
   },
   methods: {
-    async fetch() {
-      let self = this;
-      const { data } = await axios.get(
-        "https://y6ituq9hnf.execute-api.us-east-1.amazonaws.com/test/device/data?name=ZZZZ_enhet"
-      );
-      self.TempData = data;
+    fillData() {
+      this.datacollection = {
+        labels: Array(this.data.Temperature.length),
+        datasets: [
+          {
+            label: "Dataset",
+            backgroundColor: "rgba(255, 99, 132, 0.1)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 2,
+            data: this.data.Temperature // Array.from({ length: 10 }, () => Math.floor(Math.random() * 40))
+          }
+        ]
+      };
+    },
+    getName() {
+      return this.data.Name.split("_").join(" ");
     }
+  },
+  components: {
+    Chart,
+    Loader
   }
 };
 </script>

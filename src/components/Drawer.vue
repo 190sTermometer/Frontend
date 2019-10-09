@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     id="app-drawer"
-    v-model="inputValue"
+    src="https://dsx.weather.com/util/image/v/Euro-temps_1280x720_30897733728.jpg?v=at&w=1280&h=720&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0"
     app
     color="grey darken-2"
     dark
@@ -23,15 +23,12 @@
         />
       </v-list-item-avatar>
 
-      <v-list-item-title class="title">namn</v-list-item-title>
+      <v-list-item-title class="title">Olles Väder</v-list-item-title>
     </v-list-item>
 
     <v-divider class="mx-3 mb-3" />
 
     <v-list nav>
-      <!-- Bug in Vuetify for first child of v-list not receiving proper border-radius -->
-      <div />
-
       <v-list-item
         v-for="(link, i) in links"
         :key="i"
@@ -42,7 +39,7 @@
           <v-icon>{{ link.icon }}</v-icon>
         </v-list-item-action>
 
-        <v-list-item-title v-text="link.name" />
+        <v-list-item-title v-text="link.view" />
       </v-list-item>
     </v-list>
 
@@ -52,9 +49,10 @@
 
 <script>
 import router from "@/router";
+import paths from "@/router/paths";
 
 export default {
-  name: "Navigation",
+  name: "Drawer",
   props: {
     name: String
   },
@@ -63,7 +61,7 @@ export default {
     links: []
   }),
   mounted() {
-    this.links = this.$router.options.routes;
+    this.links = paths;
   },
   computed: {
     cardStyle() {
