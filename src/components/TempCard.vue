@@ -2,7 +2,6 @@
   <v-card
     href="#"
     class="ma-3"
-    width="300"
     @mouseover="hover = true"
     @mouseleave="hover = false"
     :to="'/info/' + this.device.Name"

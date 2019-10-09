@@ -1,18 +1,18 @@
 export default [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     view: "Home",
     icon: "dashboard"
   },
   {
     path: "/login",
-    name: "login",
+    name: "Login",
     view: "Login",
     icon: "person"
   },
   {
-    path: "/Info/:name",
+    path: "/info/:name",
     name: "Info",
     props: true,
     view: "Info",

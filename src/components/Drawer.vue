@@ -1,7 +1,9 @@
 <template>
+  <!-- https://dsx.weather.com/util/image/v/Euro-temps_1280x720_30897733728.jpg?v=at&w=1280&h=720&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0 -->
   <v-navigation-drawer
     id="app-drawer"
-    src="https://dsx.weather.com/util/image/v/Euro-temps_1280x720_30897733728.jpg?v=at&w=1280&h=720&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0"
+    v-model="inputValue"
+    src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg"
     app
     color="grey darken-2"
     dark
@@ -69,6 +71,12 @@ export default {
         transform: `scale(${this.hover ? 1.1 : 1})`,
         transition: "all 0.2s ease"
       };
+    },
+    inputValue: {
+      get() {
+        return this.$store.state.drawer;
+      },
+      set(val) {}
     }
   },
   created() {},

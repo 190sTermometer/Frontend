@@ -1,8 +1,8 @@
 <template>
-  <v-container fill-height fluid>
+  <div class="login">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <material-card color="green" title="Edit Profile" text="Complete your profile">
+        <v-card color="green" title="Edit Profile" text="Complete your profile">
           <v-form>
             <v-container class="py-0">
               <v-row>
@@ -52,9 +52,9 @@
               </v-row>
             </v-container>
           </v-form>
-        </material-card>
+        </v-card>
       </v-col>
       <v-col cols="12" md="4"></v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>

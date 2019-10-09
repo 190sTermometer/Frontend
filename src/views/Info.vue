@@ -1,20 +1,24 @@
 <template>
   <v-container>
     <Loader v-if="loading" />
-    <h1>{{getName()}}</h1>
-    <v-row m="20">
-      <Chart detailed :chart-data="datacollection" />
-    </v-row>
+    <CoreView v-if="!loading" :name="getName()">
+      <v-col>
+        <Chart detailed :chart-data="datacollection" />
+      </v-col>
+    </CoreView>
   </v-container>
 </template>
 
 <script>
 import Chart from "@/components/Chart";
 import Loader from "@/components/Loader";
+import CoreView from "@/components/View";
 
 const axios = require("axios");
 
 export default {
+  name: "Info",
+  components: { Chart, Loader, CoreView },
   props: {
     name: String
   },
@@ -25,8 +29,8 @@ export default {
   }),
   mounted() {
     this.$store.dispatch("getDevice", this.name).then(response => {
-      this.loading = false;
       this.data = response;
+      this.loading = false;
 
       this.fillData();
     });
@@ -49,10 +53,6 @@ export default {
     getName() {
       return this.data.Name.split("_").join(" ");
     }
-  },
-  components: {
-    Chart,
-    Loader
   }
 };
 </script>

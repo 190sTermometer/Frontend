@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     unknownDevices: [],
     knownDevices: [],
-    currentDevice: null
+    currentDevice: null,
+    drawer: null,
+    loading: false
   },
   mutations: {
     // Call local with commit()
@@ -86,6 +88,7 @@ export default new Vuex.Store({
   getters: {
     unknownDevices: state => state.unknownDevices,
     knownDevices: state => state.knownDevices,
-    currentDevice: state => state.currentDevice
+    currentDevice: state => state.currentDevice,
+    loading: state => state.loading
   }
 });
