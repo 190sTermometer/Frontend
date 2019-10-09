@@ -1,8 +1,10 @@
 <template>
   <v-container>
-    <v-row class="mb-10" justify="center" md="auto">
-      <v-col v-for="item in movies" :key="item.name" md="auto">
-        <TempCard :name="item.name" />
+    <Loader v-if="loading" />
+
+    <v-row v-if="!loading" justify="center" md="auto">
+      <v-col v-for="item in devices" :key="item.Name" md="auto">
+        <TempCard :device="item" />
       </v-col>
     </v-row>
   </v-container>
@@ -10,20 +12,30 @@
 
 <script>
 import TempCard from "@/components/TempCard";
+import Loader from "@/components/Loader";
 
 export default {
   name: "Database",
   props: {},
   data: () => ({
-    loading: false,
-    movies: [
-      { name: "Simon" },
-      { name: "Samuel" },
-      { name: "Lisa" },
-      { name: "Ylva" },
-      { name: "Jamie" }
-    ]
+    loading: true
   }),
-  components: { TempCard }
+  mounted() {
+    this.$store.dispatch("getKnownDevices").then(response => {
+      this.loading = false;
+    });
+  },
+  components: { TempCard, Loader },
+  computed: {
+    devices() {
+      return this.$store.getters.knownDevices.filter(
+        i =>
+          i.Temperature.length > 3 &&
+          i.Temperature.reduce((a, b) => a + b, 0) / i.Temperature.length >
+            10 &&
+          /^[ -~\t\n\r]+$/.test(i.Name)
+      );
+    }
+  }
 };
 </script>

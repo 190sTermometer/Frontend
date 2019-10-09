@@ -15,6 +15,9 @@ export default {
   components: {
     Navigation,
     Database
-  }
+  },
+  mounted() {},
+  computed: {},
+  methods: {}
 };
 </script>

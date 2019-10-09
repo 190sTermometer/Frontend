@@ -27,7 +27,6 @@ export default {
   data: () => ({
     TempData: ""
   }),
-
   created() {
     let date = new Date();
     console.log("Nu är den skapad " + date.toLocaleTimeString);

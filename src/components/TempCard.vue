@@ -5,9 +5,9 @@
     width="300"
     @mouseover="hover = true"
     @mouseleave="hover = false"
-    :to="'/info/' + this.name"
+    :to="'/info/' + this.device.Name"
   >
-    <v-card-title>{{name}}</v-card-title>
+    <v-card-title>{{device.Name}}</v-card-title>
     <Chart :chart-data="datacollection" />
   </v-card>
 </template>
@@ -18,7 +18,7 @@ import Chart from "@/components/Chart";
 export default {
   name: "TempCard",
   props: {
-    name: String
+    device: Object
   },
   data: () => ({
     hover: false,
@@ -34,6 +34,7 @@ export default {
   },
   created() {
     this.fillData();
+    console.log(this.device);
   },
   mounted() {
     this.fillData();
@@ -41,16 +42,14 @@ export default {
   methods: {
     fillData() {
       this.datacollection = {
-        labels: Array(10),
+        labels: Array(this.device.Temperature.length),
         datasets: [
           {
             label: "Dataset",
             backgroundColor: "rgba(255, 99, 132, 0.1)",
             borderColor: "rgba(255, 99, 132, 1)",
             borderWidth: 2,
-            data: Array.from({ length: 10 }, () =>
-              Math.floor(Math.random() * 40)
-            )
+            data: this.device.Temperature // Array.from({ length: 10 }, () => Math.floor(Math.random() * 40))
           }
         ]
       };
