@@ -1,13 +1,19 @@
 <template>
   <v-card
+    dark
     href="#"
     class="ma-3"
     @mouseover="hover = true"
     @mouseleave="hover = false"
     :to="'/info/' + this.device.Name"
   >
-    <v-card-title>{{getName()}}</v-card-title>
-    <Chart :chart-data="datacollection" />
+    <v-card-title>
+      <span class="title">{{getName()}}</span>
+    </v-card-title>
+    <v-card-text>
+      <span class="body-2 white--text">{{getTemperature()}}</span>
+    </v-card-text>
+    <Chart :height="200" :chartData="datacollection" />
   </v-card>
 </template>
 
@@ -31,9 +37,6 @@ export default {
       };
     }
   },
-  created() {
-    this.fillData();
-  },
   mounted() {
     this.fillData();
   },
@@ -44,8 +47,8 @@ export default {
         datasets: [
           {
             label: "Dataset",
-            backgroundColor: "rgba(255, 99, 132, 0.1)",
-            borderColor: "rgba(255, 99, 132, 1)",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
             data: this.device.Temperature // Array.from({ length: 10 }, () => Math.floor(Math.random() * 40))
           }
@@ -54,6 +57,11 @@ export default {
     },
     getName() {
       return this.device.Name.split("_").join(" ");
+    },
+    getTemperature() {
+      return `${
+        this.device.Temperature[this.device.Temperature.length - 1]
+      }°C / ${this.device.Humidity[this.device.Humidity.length - 1]}%`;
     }
   },
   components: {

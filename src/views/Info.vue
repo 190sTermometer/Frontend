@@ -25,12 +25,15 @@ export default {
   data: () => ({
     loading: true,
     data: [],
-    datacollection: null
+    datacollection: null,
+    updateList: []
   }),
   mounted() {
     this.$store.dispatch("getDevice", this.name).then(response => {
       this.data = response;
       this.loading = false;
+
+      this.updateList = this.data.UpdatedAt.map(i => new Date(i));
 
       this.fillData();
     });
@@ -38,10 +41,10 @@ export default {
   methods: {
     fillData() {
       this.datacollection = {
-        labels: Array(this.data.Temperature.length),
+        //labels: this.updateList, // new Array(this.data.Temperature.length)
         datasets: [
           {
-            label: "Dataset",
+            label: "",
             backgroundColor: "rgba(255, 99, 132, 0.1)",
             borderColor: "rgba(255, 99, 132, 1)",
             borderWidth: 2,
