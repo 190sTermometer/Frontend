@@ -15,40 +15,16 @@ export default {
     options: {}
   }),
   mounted() {
-    this.plugins = [
-      {
-        beforeInit: function(chart) {
-          var time = chart.options.scales.xAxes[0].time,
-            timeDiff = moment(time.max).diff(moment(time.min), "d");
-          for (i = 0; i <= timeDiff; i++) {
-            var _label = moment(time.min)
-              .add(i, "d")
-              .format("YYYY-MM-DD HH:mm:ss");
-            chart.data.labels.push(_label);
-          }
-        }
-      }
-    ];
     this.options = {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         xAxes: [
           {
-            type: "time",
-            time: {
-              parser: "YYYY-MM-DD HH:mm:ss",
-              unit: "day",
-              displayFormats: {
-                day: "ddd"
-              },
-              min: "2018-10-07 18:43:53",
-              max: "2019-10-09 18:43:53"
-            },
             ticks: {
-              source: "data"
+              maxTicksLimit: 20
             },
-            display: this.detailed
+            display: false //this.detailed
           }
         ],
         yAxes: [

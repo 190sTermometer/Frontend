@@ -50,7 +50,7 @@ export default {
             backgroundColor: "rgba(255, 255, 255, 0.1)",
             borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
-            data: this.device.Temperature // Array.from({ length: 10 }, () => Math.floor(Math.random() * 40))
+            data: this.device.Temperature
           }
         ]
       };

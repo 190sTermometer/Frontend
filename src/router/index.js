@@ -14,7 +14,7 @@ function route(path, view, name, props = false) {
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: "history",
   routes: paths
     .map(path => route(path.path, path.view, path.name, path.props))
@@ -29,3 +29,5 @@ export default new Router({
     return { x: 0, y: 0 };
   }
 });
+
+export default router;

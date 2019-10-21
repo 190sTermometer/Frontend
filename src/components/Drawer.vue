@@ -40,11 +40,8 @@
           <v-list-item-title>Devices</v-list-item-title>
         </template>
 
-        <v-list-item v-for="i in devices" :key="i.Name" link>
+        <v-list-item v-for="i in devices" :key="i.Name" link @click="changeParams(i.Name)">
           <v-list-item-title>{{getName(i.Name)}}</v-list-item-title>
-          <!--<v-list-item-icon>
-            <v-icon>person</v-icon>
-          </v-list-item-icon>-->
         </v-list-item>
       </v-list-group>
     </v-list>
@@ -68,6 +65,11 @@ export default {
   }),
   mounted() {
     this.links = paths;
+
+    this.$wait.start("home");
+    this.$store.dispatch("getKnownDevices").then(() => {
+      this.$wait.end("home");
+    });
   },
   computed: {
     cardStyle() {
@@ -84,6 +86,9 @@ export default {
   methods: {
     getName(name) {
       return name.split("_").join(" ");
+    },
+    changeParams(param) {
+      this.$router.push({ name: "Info", params: { name: param } });
     }
   }
 };

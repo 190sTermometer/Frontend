@@ -11,7 +11,7 @@ export default new Vuex.Store({
     knownDevices: [],
     currentDevice: null,
     drawer: null,
-    loading: false
+    title: ""
   },
   mutations: {
     // Call local with commit()
@@ -44,6 +44,9 @@ export default new Vuex.Store({
       unknownDevices.splice(deviceIndex, 1);
       state.unknownDevices = unknownDevices;
       state.knownDevices = knownDevices;
+    },
+    addEvent(state, newEvent) {
+      state.events.push(newEvent);
     }
   },
   actions: {
@@ -97,6 +100,6 @@ export default new Vuex.Store({
           !i.Temperature.includes(0)
       ),
     currentDevice: state => state.currentDevice,
-    loading: state => state.loading
+    title: state => state.title
   }
 });

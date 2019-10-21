@@ -16,11 +16,8 @@
 <script>
 export default {
   components: {
-    AppBar: () => import("@/components/AppBar"),
-    Navigation: () => import("@/components/Navigation"),
     Drawer: () => import("@/components/Drawer"),
-    Settings: () => import("@/components/Settings"),
-    CoreView: () => import("@/components/View")
+    Settings: () => import("@/components/Settings")
   }
 };
 </script>
