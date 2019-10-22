@@ -11,7 +11,8 @@ export default new Vuex.Store({
     knownDevices: [],
     currentDevice: null,
     drawer: null,
-    title: ""
+    title: "",
+    color: "primary"
   },
   mutations: {
     getKnownDevices(state, knownDevices) {

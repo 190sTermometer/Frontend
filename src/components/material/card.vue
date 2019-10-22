@@ -1,23 +1,21 @@
 <template>
-  <v-card :style="styles" v-bind="$attrs" v-on="$listeners">
-    <helper-offset v-if="hasOffset" :inline="inline" :full-width="fullWidth" :offset="offset">
-      <v-card
-        v-if="!$slots.offset"
-        :color="color"
-        :elevation="elevation"
-        class="v-card--material__header d-flex align-center"
-        dark
-        min-height="80"
-      >
-        <slot v-if="!title && !text" name="header" />
-        <div v-else class="px-3">
-          <h4 class="title font-weight-light mb-2" v-text="title" />
-          <p class="category font-weight-thin mb-0" v-text="text" />
-        </div>
-      </v-card>
+  <v-card v-bind="$attrs" v-on="$listeners">
+    <v-card
+      v-if="!$slots.offset"
+      :color="color"
+      :elevation="elevation"
+      class="v-card--material__header d-flex align-center offset"
+      dark
+      min-height="80"
+    >
+      <slot v-if="!title && !text" name="header" />
+      <div v-else class="px-3">
+        <h4 class="title font-weight-light mb-2" v-text="title" />
+        <p class="category font-weight-thin mb-0" v-text="text" />
+      </div>
+    </v-card>
 
-      <slot v-else name="offset" />
-    </helper-offset>
+    <slot v-else name="offset" />
 
     <v-card-text>
       <slot />
@@ -73,15 +71,19 @@ export default {
       return (
         this.$slots.header || this.$slots.offset || this.title || this.text
       );
-    },
-    styles() {
-      if (!this.hasOffset) return null;
-
-      return {
-        marginBottom: `${this.offset}px`,
-        marginTop: `${this.offset * 2}px`
-      };
     }
   }
 };
 </script>
+
+<style>
+.offset {
+  margin: 0 auto;
+  max-width: calc(100% - 32px);
+  position: relative;
+  z-index: 1;
+}
+.offset--full-width {
+  max-width: 100%;
+}
+</style>

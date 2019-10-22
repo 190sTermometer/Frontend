@@ -2,8 +2,8 @@
   <v-container fill-height fluid>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <mCard color="primary" title="Edit Profile" text="Complete your profile">
-          <v-form>
+        <mCard color="primary" title="Edit Profile" text="Complete your profile" offset="10px">
+          <v-form autocomplete="off">
             <v-container class="py-0">
               <v-row>
                 <v-col cols="12" md="4">

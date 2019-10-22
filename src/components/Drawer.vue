@@ -37,7 +37,7 @@
 
       <v-list-group prepend-icon="settings" no-action>
         <template v-slot:activator>
-          <v-list-item-title>Devices</v-list-item-title>
+          <v-list-item-title>Enheter</v-list-item-title>
         </template>
 
         <v-list-item v-for="i in devices" :key="i.Name" link @click="changeParams(i.Name)">
@@ -46,7 +46,32 @@
       </v-list-group>
     </v-list>
 
-    <template v-slot:append></template>
+    <template v-slot:append>
+      <div class="text-left">
+        <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+          <template v-slot:activator="{ on }">
+            <v-btn class="mx-2" color="indigo" fab dark v-on="on">
+              <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-list>
+              <v-col cols="12">
+                <div class="text-center body-2 text-uppercase sidebar-filter">Inställningar</div>
+
+                <v-row justify-center></v-row>
+                <v-divider class="mt-3" />
+              </v-col>
+            </v-list>
+
+            <v-divider></v-divider>
+
+            <v-list></v-list>
+          </v-card>
+        </v-menu>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -60,8 +85,13 @@ export default {
     name: String
   },
   data: () => ({
+    colors: ["primary", "info", "success", "warning", "danger"],
     hover: false,
-    links: []
+    links: [],
+    fav: true,
+    menu: false,
+    message: false,
+    hints: true
   }),
   mounted() {
     this.links = paths;
@@ -80,6 +110,10 @@ export default {
     },
     devices() {
       return this.$store.getters.knownDevices;
+    },
+    ...mapState("app", ["image", "color"]),
+    color() {
+      return this.$store.state.app.color;
     }
   },
   created() {},
@@ -89,6 +123,10 @@ export default {
     },
     changeParams(param) {
       this.$router.push({ name: "Info", params: { name: param } });
+    },
+    ...mapMutations("app", ["setImage"]),
+    setColor(color) {
+      this.$store.state.color = color;
     }
   }
 };
