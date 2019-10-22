@@ -4,16 +4,7 @@
       absolute
       dark
       scroll-target="#playground-example"
-      :color="color"
-      :elevate-on-scroll="elevateOnScroll"
-      :hide-on-scroll="hideOnScroll"
-      :fade-on-scroll="fadeOnScroll"
-      :fade-img-on-scroll="fadeImgOnScroll"
-      :inverted-scroll="invertedScroll"
-      :collapse="collapse"
-      :collapse-on-scroll="collapseOnScroll"
-      :shrink-on-scroll="shrinkOnScroll"
-      :extended="extended"
+      :color="theme"
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
@@ -25,23 +16,32 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
+
   </div>
 </template>
 
 <script>
+import { Chrome } from "vue-color";
+import { mapGetters, mapMutations } from "vuex";
+import Settings from "./Settings"
+
 export default {
   data: () => ({
-    elevateOnScroll: false,
-    hideOnScroll: false,
-    fadeOnScroll: false,
-    fadeImgOnScroll: false,
-    invertedScroll: false,
-    collapse: false,
-    collapseOnScroll: false,
-    shrinkOnScroll: false,
-    extended: false,
     color: "accent",
     colors: ["primary", "accent", "warning lighten-2", "teal", "orange"]
-  })
+  }),
+  computed: {
+    color() {
+      return this.$store.getters.color;
+    },
+    ...mapGetters(["theme", "colors"])
+  },
+  methods: {
+    ...mapMutations(["setTheme"]),
+    changeParams(param) {
+      this.$router.push({ name: "Info", params: { name: param } });
+    }
+  }
 };
+
 </script>
