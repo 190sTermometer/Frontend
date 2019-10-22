@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: "MaterialCard",
+  name: "mCard",
 
   inheritAttrs: false,
 

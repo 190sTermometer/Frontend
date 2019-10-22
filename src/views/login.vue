@@ -2,7 +2,7 @@
   <v-container fill-height fluid>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <mCard color="green" title="Edit Profile" text="Complete your profile">
+        <mCard color="primary" title="Edit Profile" text="Complete your profile">
           <v-form>
             <v-container class="py-0">
               <v-row>
@@ -107,7 +107,7 @@
                 </v-col>
 
                 <v-col cols="12" class="text-right">
-                  <v-btn color="success">Update Profile</v-btn>
+                  <v-btn color="primary">Skapa profil</v-btn>
                 </v-col>
               </v-row>
             </v-container>
