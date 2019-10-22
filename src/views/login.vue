@@ -2,7 +2,7 @@
   <v-container fill-height fluid>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <material-card color="green" title="Edit Profile" text="Complete your profile">
+        <mCard color="green" title="Edit Profile" text="Complete your profile">
           <v-form>
             <v-container class="py-0">
               <v-row>
@@ -112,7 +112,7 @@
               </v-row>
             </v-container>
           </v-form>
-        </material-card>
+        </mCard>
       </v-col>
     </v-row>
   </v-container>
@@ -121,6 +121,10 @@
 
 <script>
 export default {
+  name: "LoggaIn",
+  components: {
+    mCard: () => import("@/components/material/card")
+  },
   data() {
     return {
       signUP: false
