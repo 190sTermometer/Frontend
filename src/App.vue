@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <AppBar />
     <Drawer />
     <Settings />
 
@@ -16,8 +17,10 @@
 <script>
 export default {
   components: {
+    Settings: () => import("@/components/Settings"),
     Drawer: () => import("@/components/Drawer"),
-    Settings: () => import("@/components/Settings")
-  }
+    AppBar: () => import("@/components/AppBar")
+  },
+  mounted() {}
 };
 </script>

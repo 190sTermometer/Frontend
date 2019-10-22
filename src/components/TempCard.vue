@@ -2,7 +2,7 @@
   <v-card
     dark
     href="#"
-    class="blue"
+    :class="theme"
     @mouseover="hover = true"
     @mouseleave="hover = false"
     :to="'/info/' + this.device.Name"
@@ -19,6 +19,7 @@
 
 <script>
 import Chart from "@/components/Chart";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "TempCard",
@@ -35,7 +36,8 @@ export default {
         transform: `scale(${this.hover ? 1.1 : 1})`,
         transition: "all 0.2s ease"
       };
-    }
+    },
+    ...mapGetters(["theme", "colors"])
   },
   mounted() {
     this.fillData();

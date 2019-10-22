@@ -1,10 +1,10 @@
 <template>
-  <v-card v-bind="$attrs" v-on="$listeners">
+  <v-card v-bind="$attrs" v-on="$listeners" class="s-offsetbox">
     <v-card
       v-if="!$slots.offset"
-      :color="color"
+      :color="theme"
       :elevation="elevation"
-      class="v-card--material__header d-flex align-center offset"
+      class="v-card--material__header d-flex align-center s-offset"
       dark
       min-height="80"
     >
@@ -14,8 +14,6 @@
         <p class="category font-weight-thin mb-0" v-text="text" />
       </div>
     </v-card>
-
-    <slot v-else name="offset" />
 
     <v-card-text>
       <slot />
@@ -30,6 +28,8 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   name: "mCard",
 
@@ -71,19 +71,22 @@ export default {
       return (
         this.$slots.header || this.$slots.offset || this.title || this.text
       );
-    }
+    },
+    ...mapGetters(["theme", "colors"])
   }
 };
 </script>
 
 <style>
-.offset {
-  margin: 0 auto;
-  max-width: calc(100% - 32px);
-  position: relative;
-  z-index: 1;
+.s-offset {
+  position: absolute;
+  top: -20px;
+  width: calc(100% - 10%);
+  margin: 0 5%;
+  height: 90px;
+  padding: 5px;
 }
-.offset--full-width {
-  max-width: 100%;
+.s-offsetbox {
+  padding-top: 60px;
 }
 </style>

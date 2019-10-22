@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-2 white">
+  <v-card class="pa-2 white" flat>
     <v-card-text>
       <h1 class="display-1 white--text ma-3">{{title.split("_").join(" ")}}</h1>
       <v-row class="d-flex align-content-start flex-wrap" style="margin-top: 20px;">
@@ -19,10 +19,6 @@ export default {
       default: ""
     }
   },
-  data: () => ({}),
-  mounted() {},
-  methods: {},
-  components: {},
   computed: {
     title() {
       return this.$store.getters.title;
@@ -30,3 +26,11 @@ export default {
   }
 };
 </script>
+<style >
+.scroll-area {
+  position: relative;
+  margin: auto;
+  width: 600px;
+  height: 400px;
+}
+</style>

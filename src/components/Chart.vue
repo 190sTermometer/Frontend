@@ -24,12 +24,24 @@ export default {
             ticks: {
               maxTicksLimit: 20
             },
-            display: false //this.detailed
+            display: false, //this.detailed
+            gridLines: {
+              display: true,
+              color: "rgba(255, 255, 255, 0.3)"
+            }
           }
         ],
         yAxes: [
           {
-            display: this.detailed
+            ticks: {
+              fontColor: "#fff",
+              fontSize: 14
+            },
+            display: this.detailed,
+            gridLines: {
+              display: false,
+              color: "rgba(255, 255, 255, 0.7)"
+            }
           }
         ]
       },

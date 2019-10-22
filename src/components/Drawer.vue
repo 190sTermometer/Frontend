@@ -22,12 +22,7 @@
     <v-divider class="mx-3 mb-3" />
 
     <v-list nav>
-      <v-list-item
-        v-for="(link, i) in links"
-        :key="i"
-        :to="link.path"
-        active-class="primary white--text"
-      >
+      <v-list-item v-for="(link, i) in links" :key="i" :to="link.path" :active-class="theme">
         <v-list-item-action>
           <v-icon>{{ link.icon }}</v-icon>
         </v-list-item-action>
@@ -47,30 +42,15 @@
     </v-list>
 
     <template v-slot:append>
-      <div class="text-left">
-        <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
-          <template v-slot:activator="{ on }">
-            <v-btn class="mx-2" color="indigo" fab dark v-on="on">
-              <v-icon dark>mdi-format-list-bulleted-square</v-icon>
-            </v-btn>
-          </template>
+      <v-list-item>
+        <v-list-item-avatar>
+          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+        </v-list-item-avatar>
 
-          <v-card>
-            <v-list>
-              <v-col cols="12">
-                <div class="text-center body-2 text-uppercase sidebar-filter">Inställningar</div>
-
-                <v-row justify-center></v-row>
-                <v-divider class="mt-3" />
-              </v-col>
-            </v-list>
-
-            <v-divider></v-divider>
-
-            <v-list></v-list>
-          </v-card>
-        </v-menu>
-      </div>
+        <v-list-item-content>
+          <v-list-item-title>Samuel</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </template>
   </v-navigation-drawer>
 </template>
@@ -78,6 +58,8 @@
 <script>
 import router from "@/router";
 import paths from "@/router/paths";
+import { Chrome } from "vue-color";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "Drawer",
@@ -85,13 +67,13 @@ export default {
     name: String
   },
   data: () => ({
-    colors: ["primary", "info", "success", "warning", "danger"],
     hover: false,
     links: [],
     fav: true,
     menu: false,
     message: false,
-    hints: true
+    hints: true,
+    Path: ""
   }),
   mounted() {
     this.links = paths;
@@ -111,22 +93,23 @@ export default {
     devices() {
       return this.$store.getters.knownDevices;
     },
-    ...mapState("app", ["image", "color"]),
     color() {
-      return this.$store.state.app.color;
-    }
+      return this.$store.getters.color;
+    },
+    ...mapGetters(["theme", "colors"])
   },
   created() {},
   methods: {
     getName(name) {
       return name.split("_").join(" ");
     },
+    ...mapMutations(["setTheme"]),
     changeParams(param) {
       this.$router.push({ name: "Info", params: { name: param } });
     },
-    ...mapMutations("app", ["setImage"]),
-    setColor(color) {
-      this.$store.state.color = color;
+    GetRandomPath() {
+      var max = this.links.length;
+      this.Path = this.links[this.Random(0, max)];
     }
   }
 };

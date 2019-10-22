@@ -12,7 +12,15 @@ export default new Vuex.Store({
     currentDevice: null,
     drawer: null,
     title: "",
-    color: "primary"
+    theme: "secondary",
+    colors: [
+      "primary",
+      "secondary",
+      "tertiary",
+      "error",
+      "info",
+      "success warning"
+    ]
   },
   mutations: {
     getKnownDevices(state, knownDevices) {
@@ -47,6 +55,11 @@ export default new Vuex.Store({
     },
     addEvent(state, newEvent) {
       state.events.push(newEvent);
+    },
+    setTheme(state, color) {
+      state.theme = color;
+
+      console.log(state.theme);
     }
   },
   actions: {
@@ -54,7 +67,7 @@ export default new Vuex.Store({
     getKnownDevices: ({ commit }) => {
       return new Promise(resolve => {
         let data = "";
-
+        // https://fxcixo3b0e.execute-api.us-east-1.amazonaws.com/vibecheck/device
         axios
           .get(
             "https://y6ituq9hnf.execute-api.us-east-1.amazonaws.com/test/device/data?allData=true"
@@ -63,6 +76,9 @@ export default new Vuex.Store({
             data = response.data.Items.Items;
             commit("getKnownDevices", data);
             resolve(data);
+          })
+          .catch(error => {
+            alert("Rip. Kunde inte ladda databasen - försök igen\n" + error);
           });
       });
     },
@@ -79,6 +95,9 @@ export default new Vuex.Store({
             data = response.data.data;
             commit("getDevice", data);
             resolve(data);
+          })
+          .catch(error => {
+            alert("Rip. Kunde inte ladda databasen - försök igen\n" + error);
           });
       });
     },
@@ -98,6 +117,8 @@ export default new Vuex.Store({
           !i.Temperature.includes(0)
       ),
     currentDevice: state => state.currentDevice,
-    title: state => state.title
+    title: state => state.title,
+    theme: state => state.theme,
+    colors: state => state.colors
   }
 });

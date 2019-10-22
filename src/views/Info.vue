@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <Loader v-if="$wait.any" />
-    <CoreView v-if="!$wait.any" :name="this.data.Name" class="primary">
+    <CoreView v-if="!$wait.any" :name="this.data.Name" :class="theme">
       <v-col md="6" fluid>
         <Chart detailed :chart-data="datacollection" />
         <!-- Ladda om sidan om chart ändrar storlek -->
@@ -18,6 +18,7 @@ import Chart from "@/components/Chart";
 import Loader from "@/components/Loader";
 import CoreView from "@/components/View";
 import SimonMap from "@/components/SimonMap";
+import { mapGetters, mapMutations } from "vuex";
 
 const axios = require("axios");
 
@@ -35,6 +36,9 @@ export default {
   mounted() {
     this.load();
   },
+  computed: {
+    ...mapGetters(["theme", "colors"])
+  },
   beforeRouteUpdate(to, from, next) {
     this.load(to, to.params.name);
     next();
@@ -46,8 +50,9 @@ export default {
         datasets: [
           {
             label: "",
-            backgroundColor: "rgba(255, 99, 132, 0.1)",
-            borderColor: "rgba(255, 99, 132, 1)",
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            scaleFontColor: "rgba(255, 255, 255, 1)",
+            borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
             data: this.data.Temperature // Array.from({ length: 10 }, () => Math.floor(Math.random() * 40))
           }

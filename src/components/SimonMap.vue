@@ -1,6 +1,6 @@
 <template>
   <div id="map" style="width: 100%; height: 100%;">
-    <l-map :zoom="zoom" :center="center" :min-zoom="5" :world-copy-jump="false">
+    <l-map :zoom="zoom" :center="center" :min-zoom="5" :world-copy-jump="false" :dragging="false">
       <l-tile-layer :url="url" :attribution="attribution" />
       <l-marker :lat-lng="marker" />
     </l-map>
