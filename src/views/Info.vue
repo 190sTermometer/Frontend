@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <Loader v-if="$wait.any" />
-    <CoreView v-if="!$wait.any" :name="this.data.Name">
+    <CoreView v-if="!$wait.any" :name="this.data.Name" class="primary">
       <v-col md="6" fluid>
         <Chart detailed :chart-data="datacollection" />
         <!-- Ladda om sidan om chart ändrar storlek -->

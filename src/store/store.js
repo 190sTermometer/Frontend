@@ -14,7 +14,6 @@ export default new Vuex.Store({
     title: ""
   },
   mutations: {
-    // Call local with commit()
     getKnownDevices(state, knownDevices) {
       state.knownDevices = knownDevices;
     },
@@ -50,8 +49,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    // Call with dispatch() from another file
-    // Use commit to call local method / mutation
     getUnknownDevices: ({ commit }) => {},
     getKnownDevices: ({ commit }) => {
       return new Promise(resolve => {

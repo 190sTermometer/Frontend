@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <Loader v-if="$wait.any" />
-    <CoreView v-if="!$wait.any">
+    <CoreView v-if="!$wait.any" class="grey darken-3">
       <v-col v-for="item in devices" :key="item.Name" cols="4">
         <TempCard :device="item" />
       </v-col>

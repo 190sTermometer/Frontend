@@ -4,7 +4,7 @@
     id="app-drawer"
     src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg"
     app
-    color="grey darken-2"
+    color="grey darken-3"
     dark
     floating
     mobile-break-point="991"
