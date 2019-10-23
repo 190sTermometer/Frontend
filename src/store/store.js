@@ -21,7 +21,7 @@ export default new Vuex.Store({
       "info",
       "success warning"
     ],
-    userDetails: null
+    userDetails: ""
   },
   mutations: {
     getKnownDevices(state, knownDevices) {
@@ -62,32 +62,22 @@ export default new Vuex.Store({
     },
     setTheme(state, color) {
       state.theme = color;
-
-      console.log(state.theme);
+    },
+    setUserDetails(state, userDetails) {
+      state.userDetails = userDetails;
     },
     setLoggedIn(state, userDetails) {
       var d = new Date();
       d.setTime(d.getTime() + 10 * 24 * 60 * 60 * 1000);
       var expires = "expires=" + d.toUTCString();
       document.cookie =
-        "userDetails=" + userDetails + ";" + expires + ";path=/";
+        "userDetails=" +
+        JSON.stringify(userDetails) +
+        ";" +
+        expires +
+        ";path=/";
     },
-    checkLoggedIn(state) {
-      var name = "userDetails=";
-      var ca = document.cookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          state.userDetails = c.substring(name.length, c.length);
-          return c.substring(name.length, c.length);
-        }
-      }
-      state.userDetails = null;
-      return null;
-    }
+    checkLoggedIn(state) {}
   },
   actions: {
     getUnknownDevices: ({ commit }) => {},
@@ -126,6 +116,24 @@ export default new Vuex.Store({
           .catch(error => {
             alert("Rip. Kunde inte ladda databasen - försök igen\n" + error);
           });
+      });
+    },
+    checkLoggedIn: ({ commit }) => {
+      return new Promise(resolve => {
+        var name = "userDetails=";
+        var ca = document.cookie.split(";");
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            commit("setUserDetails", c.substring(name.length, c.length));
+            resolve(c.substring(name.length, c.length));
+          }
+        }
+        commit("setUserDetails", null);
+        resolve(null);
       });
     },
     registerDevice: ({ commit }) => {},
@@ -183,6 +191,13 @@ export default new Vuex.Store({
     title: state => state.title,
     theme: state => state.theme,
     colors: state => state.colors,
-    drawer: state => state.drawer
+    drawer: state => state.drawer,
+    userDetails: state => {
+      try {
+        return state.userDetails;
+      } catch (e) {
+        return "Error";
+      }
+    }
   }
 });

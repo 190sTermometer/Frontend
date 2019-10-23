@@ -37,6 +37,10 @@ export default {
       h: {
         text: "Visa Home",
         key: "h"
+      },
+      themeSwitcher: {
+        text: "Swich theme",
+        key: "(numbers)"
       }
     }
   }),
@@ -44,6 +48,7 @@ export default {
     ...mapMutations(["setTheme"])
   },
   mounted() {
+    var max = this.$store.state.colors.length;
     // window.onkeydown = event => {
     //   let key = event.key;
     //   if (key == "i") {

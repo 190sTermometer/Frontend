@@ -4,6 +4,7 @@
     :nudge-width="200"
     offset-x
     transition="slide-y-transition"
+    v-model="open"
   >
     <template v-slot:activator="{ on }">
       <v-btn class="mx-2" :color="theme" fab dark depressed v-on="on">
@@ -18,7 +19,7 @@
         <v-btn depressed>Logga in</v-btn>
         <v-btn depressed>
           <v-icon right dark>mdi-cloud-upload</v-icon>
-          <spand>Logga ut</spand>
+          <span>Logga ut</span>
         </v-btn>
         <v-btn depressed>skapa konto</v-btn>
         <v-list-item>
@@ -42,21 +43,20 @@ export default {
   name: "ProfileSettings",
   computed: {
     ...mapGetters(["theme", "colors"])
-  }
-  
-  created() {},
+  },
+  data: () => ({
+    open: false
+  }),
   methods: {
     ...mapMutations(["setTheme"])
+  },
+  mounted() {
+    document.addEventListener("keydown", event => {
+      let key = event.key;
+      if (key == "p") {
+        this.open = !this.open;
+      }
+    });
   }
 };
-fff
-    
-        console.log("fff");eee    mounted() {
-    window.onkeydown = event => {
-      let key = event.key;
-      if (key == "i") {
-        console.lop("ddd");
-        this.open = !eees.open;
-      }
-    };
-  }
+</script>

@@ -13,6 +13,7 @@
     stateless
     v-model="drawerData"
   >
+    <span>{{userDetails}} - lll</span>
     <template v-slot:img="attrs">
       <v-img v-bind="attrs" gradient="to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)" />
     </template>
@@ -93,7 +94,7 @@ export default {
         this.$store.commit("setDrawer", val);
       }
     },
-    ...mapGetters(["theme", "colors"])
+    ...mapGetters(["theme", "colors", "userDetails"])
   },
   created() {},
   methods: {
@@ -103,11 +104,11 @@ export default {
     ...mapMutations(["setTheme"]),
     changeParams(param) {
       this.$router.push({ name: "Info", params: { name: param } });
-    },
-    GetRandomPath() {
+    }
+    /*GetRandomPath() {
       var max = this.links.length;
       this.Path = this.links[this.Random(0, max)];
-    }
+    }*/
   }
 };
 </script>

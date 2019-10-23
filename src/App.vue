@@ -24,8 +24,10 @@ export default {
     AppBar
   },
   mounted() {
-    console.log("hdd");
-    console.log(this.$store.commit("checkLoggedIn"));
+    this.$store.dispatch("checkLoggedIn").then(out => {
+      console.log(out);
+      console.log(this.$store.state.userDetails);
+    });
   }
 };
 </script>

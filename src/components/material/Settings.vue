@@ -57,13 +57,16 @@ export default {
     ...mapMutations(["setTheme"])
   },
   mounted() {
-    window.onkeydown = event => {
+    var max = this.$store.state.colors.length;
+    document.addEventListener("keydown", event => {
       let key = event.key;
       if (key == "i") {
-        console.log("ddd");
         this.open = !this.open;
       }
-    };
+      if (key <= max && key != "0") {
+        this.setTheme(this.$store.state.colors[key - 1]);
+      }
+    });
   }
 };
 </script>

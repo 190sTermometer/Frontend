@@ -3,7 +3,7 @@
     indeterminate
     size="150"
     width="8"
-    :color="theme"
+    color="yellow"
     style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%)"
   ></v-progress-circular>
 </template>
@@ -15,12 +15,12 @@ export default {
   name: "Loader",
   data: () => ({}),
   methods: {
-    color() {
-      return this.$store.getters.color;
-    }
+    // color() {
+    //   return this.$store.getters.color;
+    // }
   },
   computed: {
-    ...mapGetters(["theme", "colors"])
+    ...mapGetters(["theme", "colors", "userDetails"])
   }
 };
 </script>
