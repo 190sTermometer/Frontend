@@ -1,47 +1,41 @@
 <template>
-  <div>
-    <v-app-bar
-      absolute
-      dark
-      scroll-target="#playground-example"
-      :color="theme"
-    >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  <v-app-bar app fixed clipped-left dark :color="theme">
+    <v-app-bar-nav-icon @click="toggleDrawer()" />
 
-      <v-toolbar-title>Title</v-toolbar-title>
+    <v-toolbar-title>Olles Väder</v-toolbar-title>
 
-      <v-spacer></v-spacer>
+    <v-spacer />
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <Search />
 
-  </div>
+    <v-spacer />
+
+    <Settings />
+    <ProfileSettings />
+  </v-app-bar>
 </template>
 
 <script>
-import { Chrome } from "vue-color";
 import { mapGetters, mapMutations } from "vuex";
-import Settings from "./Settings"
+import Settings from "./material/Settings";
+import ProfileSettings from "./material/ProfileSettings";
+
+import Search from "./material/Search";
 
 export default {
-  data: () => ({
-    color: "accent",
-    colors: ["primary", "accent", "warning lighten-2", "teal", "orange"]
-  }),
+  data: () => ({}),
+  components: { Settings, ProfileSettings, Search },
   computed: {
-    color() {
-      return this.$store.getters.color;
-    },
-    ...mapGetters(["theme", "colors"])
+    ...mapGetters(["theme", "colors", "color"])
   },
   methods: {
     ...mapMutations(["setTheme"]),
     changeParams(param) {
       this.$router.push({ name: "Info", params: { name: param } });
+    },
+    toggleDrawer() {
+      this.$store.commit("setDrawer", !this.$store.state.drawer);
     }
   }
 };
-
 </script>

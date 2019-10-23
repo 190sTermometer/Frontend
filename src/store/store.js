@@ -10,7 +10,7 @@ export default new Vuex.Store({
     unknownDevices: [],
     knownDevices: [],
     currentDevice: null,
-    drawer: null,
+    drawer: false,
     title: "",
     theme: "secondary",
     colors: [
@@ -20,7 +20,8 @@ export default new Vuex.Store({
       "error",
       "info",
       "success warning"
-    ]
+    ],
+    userDetails: null
   },
   mutations: {
     getKnownDevices(state, knownDevices) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     getDevice(state, device) {
       state.currentDevice = device;
+    },
+    setDrawer(state, val) {
+      state.drawer = val;
     },
     removeDevice(state, macAddress) {
       let knownDevices = state.knownDevices,
@@ -60,6 +64,29 @@ export default new Vuex.Store({
       state.theme = color;
 
       console.log(state.theme);
+    },
+    setLoggedIn(state, userDetails) {
+      var d = new Date();
+      d.setTime(d.getTime() + 10 * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      document.cookie =
+        "userDetails=" + userDetails + ";" + expires + ";path=/";
+    },
+    checkLoggedIn(state) {
+      var name = "userDetails=";
+      var ca = document.cookie.split(";");
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          state.userDetails = c.substring(name.length, c.length);
+          return c.substring(name.length, c.length);
+        }
+      }
+      state.userDetails = null;
+      return null;
     }
   },
   actions: {
@@ -103,7 +130,43 @@ export default new Vuex.Store({
     },
     registerDevice: ({ commit }) => {},
     removeDevice: ({ commit }) => {},
-    clearDevice: ({ commit }) => {}
+    clearDevice: () => {},
+    login: ({ commit }, details) => {
+      var username = details.username;
+      var password = details.password;
+
+      return new Promise(resolve => {
+        let data = "";
+
+        axios
+          .get("https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user")
+          .then(response => {
+            let userFound = null;
+
+            data = response.data.Item.Items;
+
+            data.forEach(user => {
+              if (
+                user["användarnamn"] == username &&
+                user["lösenord"] == password
+              ) {
+                userFound = user;
+              }
+            });
+
+            if (userFound) {
+              commit("setLoggedIn", userFound);
+            }
+
+            resolve(userFound);
+          })
+          .catch(error => {
+            console.log(
+              "Rip. Kunde inte ladda databasen - försök igen\n" + error
+            );
+          });
+      });
+    }
   },
   getters: {
     unknownDevices: state => state.unknownDevices,
@@ -119,6 +182,7 @@ export default new Vuex.Store({
     currentDevice: state => state.currentDevice,
     title: state => state.title,
     theme: state => state.theme,
-    colors: state => state.colors
+    colors: state => state.colors,
+    drawer: state => state.drawer
   }
 });

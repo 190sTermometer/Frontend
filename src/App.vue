@@ -2,7 +2,6 @@
   <v-app>
     <AppBar />
     <Drawer />
-    <Settings />
 
     <v-content class="grey darken-3">
       <v-container fluid>
@@ -15,12 +14,18 @@
 </template>
 
 <script>
+import Drawer from "@/components/Drawer";
+import AppBar from "@/components/AppBar";
+
 export default {
+  name: "App",
   components: {
-    Settings: () => import("@/components/Settings"),
-    Drawer: () => import("@/components/Drawer"),
-    AppBar: () => import("@/components/AppBar")
+    Drawer,
+    AppBar
   },
-  mounted() {}
+  mounted() {
+    console.log("hdd");
+    console.log(this.$store.commit("checkLoggedIn"));
+  }
 };
 </script>

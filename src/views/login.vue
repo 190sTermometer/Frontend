@@ -169,59 +169,21 @@ export default {
   data: () => ({
     signUP: true,
     verifyUser: false,
-    verifyPass: false,
-    testAccounts: {
-      username: "abcde",
-      password: "12345"
-    }
+    verifyPass: false
   }),
   methods: {
     verify() {
-      if (
-        username1.value == this.testAccounts.username &&
-        password1.value == this.testAccounts.password
-      ) {
-        this.verifyUser = !this.verifyUser;
-        alert("Användarnamn funkar (⌐■_■)");
-        this.setCookie("login", {
+      this.$store
+        .dispatch("login", {
           username: username1.value,
           password: password1.value
+        })
+        .then(data => {
+          console.log(data);
         });
-      } else {
-        alert("Användarnamn error 😢");
-      }
-    },
-
-    setCookie(cname, cvalue) {
-      var d = new Date();
-      d.setTime(d.getTime() + 10 * 24 * 60 * 60 * 1000);
-      var expires = "expires=" + d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    },
-
-    getCookie(cname) {
-      var name = cname + "=";
-      var ca = document.cookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
     }
   },
-  mounted() {
-    let log = this.getCookie("login");
-    if (log) {
-      alert("inloggad");
-    } else {
-      alert("inte inloggad :(");
-    }
-  },
+  mounted() {},
   computed: {
     ...mapGetters(["theme", "colors"])
   }

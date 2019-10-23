@@ -10,6 +10,13 @@
         <SimonMap></SimonMap>
       </v-col>
     </CoreView>
+    <v-col md="6" fluid>
+      <mCard :color="theme" title="Senaste temperaturen" text="seanste">
+        <v-form autocomplete="off">
+          <v-container class="py-0"></v-container>
+        </v-form>
+      </mCard>
+    </v-col>
   </v-container>
 </template>
 
@@ -19,12 +26,13 @@ import Loader from "@/components/Loader";
 import CoreView from "@/components/View";
 import SimonMap from "@/components/SimonMap";
 import { mapGetters, mapMutations } from "vuex";
+import mCard from "@/components/material/card";
 
 const axios = require("axios");
 
 export default {
   name: "Info",
-  components: { Chart, Loader, CoreView, SimonMap },
+  components: { Chart, Loader, CoreView, SimonMap, mCard },
   props: {
     name: String
   },
