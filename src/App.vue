@@ -1,9 +1,8 @@
 <template>
   <v-app>
     <AppBar />
-    <Drawer />
 
-    <v-content class="grey darken-3">
+    <v-content :class="mode">
       <v-container fluid>
         <v-fade-transition mode="out-in">
           <router-view />
@@ -14,20 +13,18 @@
 </template>
 
 <script>
-import Drawer from "@/components/Drawer";
 import AppBar from "@/components/AppBar";
 
 export default {
   name: "App",
   components: {
-    Drawer,
     AppBar
   },
-  mounted() {
-    this.$store.dispatch("checkLoggedIn").then(out => {
-      console.log(out);
-      console.log(this.$store.state.userDetails);
-    });
+  mounted() {},
+  computed: {
+    mode() {
+      return this.$store.getters.mode;
+    }
   }
 };
 </script>

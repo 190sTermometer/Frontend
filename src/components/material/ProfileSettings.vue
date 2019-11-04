@@ -16,21 +16,27 @@
 
     <v-card>
       <v-list>
-        <v-btn depressed>Logga in</v-btn>
-        <v-btn depressed>
-          <v-icon right dark>mdi-cloud-upload</v-icon>
-          <span>Logga ut</span>
-        </v-btn>
-        <v-btn depressed>skapa konto</v-btn>
-        <v-list-item>
-          <v-list-item-title>test3</v-list-item-title>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-title>test5</v-list-item-title>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-title>test2</v-list-item-title>
-        </v-list-item>
+        <div v-if="isLoggedIn">
+          <v-col>
+            <v-list-item>
+              <v-avatar>
+                <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+              </v-avatar>
+              <v-list-item-title class="s-username">{{username}}</v-list-item-title>
+            </v-list-item>
+          </v-col>
+
+          <v-divider class="mx-3 mb-3" />
+          <v-col>
+            <v-btn :color="theme" depressed @click="logout">Logout</v-btn>
+          </v-col>
+        </div>
+        <div v-else>
+          <v-col>
+            <v-btn :color="theme" depressed to="/login">Login</v-btn>
+            <v-btn :color="theme" depressed to="/register">Register</v-btn>
+          </v-col>
+        </div>
       </v-list>
     </v-card>
   </v-menu>
@@ -42,12 +48,20 @@ import { mapMutations, mapState, mapGetters } from "vuex";
 export default {
   name: "ProfileSettings",
   computed: {
-    ...mapGetters(["theme", "colors"])
+    mode() {
+      return this.$store.getters.mode;
+    },
+    ...mapGetters(["theme", "colors", "isLoggedIn", "username"])
   },
   data: () => ({
     open: false
   }),
   methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    },
     ...mapMutations(["setTheme"])
   },
   mounted() {
@@ -60,3 +74,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.s-username {
+  margin: 0 10px;
+}
+</style>

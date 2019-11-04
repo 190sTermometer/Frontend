@@ -7,11 +7,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    status: "",
+    username: localStorage.getItem("username") || "",
+
     unknownDevices: [],
     knownDevices: [],
     currentDevice: null,
     drawer: false,
     title: "",
+    search: "",
     theme: "secondary",
     colors: [
       "primary",
@@ -21,7 +25,11 @@ export default new Vuex.Store({
       "info",
       "success warning"
     ],
-    userDetails: ""
+    mode: "grey darken-3",
+    modes: [
+      "grey darken-3", // Darkmode
+      "grey lighten-5" // Lightmode
+    ]
   },
   mutations: {
     getKnownDevices(state, knownDevices) {
@@ -57,27 +65,26 @@ export default new Vuex.Store({
       state.unknownDevices = unknownDevices;
       state.knownDevices = knownDevices;
     },
-    addEvent(state, newEvent) {
-      state.events.push(newEvent);
-    },
     setTheme(state, color) {
       state.theme = color;
     },
-    setUserDetails(state, userDetails) {
-      state.userDetails = userDetails;
+    setMode(state, mode) {
+      state.mode = mode;
     },
-    setLoggedIn(state, userDetails) {
-      var d = new Date();
-      d.setTime(d.getTime() + 10 * 24 * 60 * 60 * 1000);
-      var expires = "expires=" + d.toUTCString();
-      document.cookie =
-        "userDetails=" +
-        JSON.stringify(userDetails) +
-        ";" +
-        expires +
-        ";path=/";
+    auth_request(state) {
+      state.status = "loading";
     },
-    checkLoggedIn(state) {}
+    auth_success(state, username) {
+      state.status = "success";
+      state.username = username;
+    },
+    auth_error(state) {
+      state.status = "error";
+    },
+    logout(state) {
+      state.status = "";
+      state.username = "";
+    }
   },
   actions: {
     getUnknownDevices: ({ commit }) => {},
@@ -118,61 +125,75 @@ export default new Vuex.Store({
           });
       });
     },
-    checkLoggedIn: ({ commit }) => {
-      return new Promise(resolve => {
-        var name = "userDetails=";
-        var ca = document.cookie.split(";");
-        for (var i = 0; i < ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) == " ") {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            commit("setUserDetails", c.substring(name.length, c.length));
-            resolve(c.substring(name.length, c.length));
-          }
-        }
-        commit("setUserDetails", null);
-        resolve(null);
-      });
-    },
-    registerDevice: ({ commit }) => {},
-    removeDevice: ({ commit }) => {},
-    clearDevice: () => {},
-    login: ({ commit }, details) => {
-      var username = details.username;
-      var password = details.password;
-
-      return new Promise(resolve => {
-        let data = "";
-
+    login({ commit }, user) {
+      return new Promise((resolve, reject) => {
+        commit("auth_request");
         axios
           .get("https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user")
-          .then(response => {
-            let userFound = null;
+          .then(resp => {
+            let currentUser = null;
 
-            data = response.data.Item.Items;
-
-            data.forEach(user => {
+            resp = resp.data.Item.Items;
+            resp.forEach(u => {
               if (
-                user["användarnamn"] == username &&
-                user["lösenord"] == password
+                u["användarnamn"] == user.username &&
+                u["lösenord"] == user.password
               ) {
-                userFound = user;
+                currentUser = u;
               }
             });
 
-            if (userFound) {
-              commit("setLoggedIn", userFound);
-            }
+            if (currentUser != null) {
+              const username = currentUser["användarnamn"];
 
-            resolve(userFound);
+              localStorage.setItem("username", username);
+
+              commit("auth_success", username);
+              resolve(resp);
+            } else {
+              commit("auth_error");
+              localStorage.removeItem("username");
+              reject("Wrong password");
+            }
           })
-          .catch(error => {
-            console.log(
-              "Rip. Kunde inte ladda databasen - försök igen\n" + error
-            );
+          .catch(err => {
+            reject(err);
           });
+      });
+    },
+    register({ commit }, user) {
+      return new Promise((resolve, reject) => {
+        commit("auth_request");
+        axios
+          .post(
+            "https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user",
+            user
+          )
+          .then(resp => {
+            if (resp.data.errorMessage == null) {
+              const username = user["användarnamn"];
+              localStorage.setItem("username", username);
+              commit("auth_success", username);
+              resolve(resp);
+            } else {
+              commit("auth_error", "Error nop");
+              localStorage.removeItem("username");
+              reject("ERRORR");
+            }
+          })
+          .catch(err => {
+            commit("auth_error", err);
+            localStorage.removeItem("username");
+            reject(err);
+          });
+      });
+    },
+    logout({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit("logout");
+        localStorage.removeItem("username");
+        delete axios.defaults.headers.common["Authorization"];
+        resolve();
       });
     }
   },
@@ -191,13 +212,12 @@ export default new Vuex.Store({
     title: state => state.title,
     theme: state => state.theme,
     colors: state => state.colors,
+    mode: state => state.mode,
+    modes: state => state.modes,
     drawer: state => state.drawer,
-    userDetails: state => {
-      try {
-        return state.userDetails;
-      } catch (e) {
-        return "Error";
-      }
-    }
+    isLoggedIn: state => !!state.username,
+    authStatus: state => state.status,
+    username: state => state.username,
+    search: state => state.search
   }
 });

@@ -1,14 +1,16 @@
 <template>
-  <v-text-field
-    label="Sök"
-    prepend-inner-icon="mdi-magnify"
-    type="text"
-    solo
-    flat
-    hide-details
-    @keydown="inputChange"
-    id="search"
-  />
+  <v-container>
+    <v-text-field
+      label="Sök"
+      prepend-inner-icon="mdi-magnify"
+      type="text"
+      flat
+      hide-details
+      @keyup="inputChange"
+      id="search"
+      v-model="search"
+    />
+  </v-container>
 </template>
 
 <script>
@@ -19,13 +21,15 @@ export default {
   computed: {
     ...mapGetters(["theme", "colors"])
   },
+  data: () => ({
+    search: ""
+  }),
   created() {},
   methods: {
     ...mapMutations(["setTheme"]),
     inputChange(e) {
-      if ((e.key = "Enter")) {
-        console.log(e, search.value);
-      }
+      this.$store.state.search = this.search;
+      console.log(this.search);
     }
   }
 };

@@ -14,9 +14,14 @@
 
     <v-card>
       <v-list>
-        <v-col cols="12">
-          <div class="text-center body-2 text-uppercase sidebar-filter">Inställningar</div>
+                <v-col cols="12">
+        <div class="text-center body-4 text-uppercase">Inställningar</div>
+        
+                </v-col cols="12">
+                
           <v-divider class="mx-3 mb-3" />
+        <v-col cols="12">
+          <div class="text-center body-2 text-uppercase">Temafärg</div>
           <v-row justify-center>
             <v-btn
               v-for="i in colors"
@@ -27,6 +32,23 @@
               fab
               x-small
               @click="setTheme(i)"
+            ></v-btn>
+          </v-row>
+        </v-col>
+
+        <v-divider class="mx-3 mb-3" />
+        <v-col>
+          <div class="text-center body-2 text-uppercase">Lightmode / Darkmode</div>
+          <v-row justify-center>
+            <v-btn
+              v-for="i in modes"
+              :key="i"
+              class="mx-3"
+              :color="i"
+              dark
+              fab
+              x-small
+              @click="setMode(i)"
             ></v-btn>
           </v-row>
         </v-col>
@@ -47,14 +69,17 @@ export default {
   name: "Settings",
   components: { ShortcutList },
   computed: {
-    ...mapGetters(["theme", "colors"])
+    mode() {
+      return this.$store.getters.mode;
+    },
+    ...mapGetters(["theme", "colors", "modes"])
   },
   created() {},
   data: () => ({
     open: false
   }),
   methods: {
-    ...mapMutations(["setTheme"])
+    ...mapMutations(["setTheme", "setMode"])
   },
   mounted() {
     var max = this.$store.state.colors.length;

@@ -24,7 +24,7 @@ import { mapMutations, mapState, mapGetters } from "vuex";
 export default {
   name: "ShortcutList",
   computed: {
-    ...mapGetters(["theme", "colors"])
+    ...mapGetters(["theme", "colors", "mode"])
   },
   created() {},
   data: () => ({

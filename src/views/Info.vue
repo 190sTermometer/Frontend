@@ -9,14 +9,13 @@
       <v-col md="6" fluid>
         <SimonMap></SimonMap>
       </v-col>
+      <v-col>
+        <h1
+          class="white--text title"
+        >Senaste temperaturen: {{data.Temperature[data.Temperature.length - 1]}}</h1>
+      </v-col>
+      <v-btn v-for="i in offsets" :key="i.name" @click="sort(i.name)">{{i.name}}</v-btn>
     </CoreView>
-    <v-col md="6" fluid>
-      <mCard :color="theme" title="Senaste temperaturen" text="seanste">
-        <v-form autocomplete="off">
-          <v-container class="py-0"></v-container>
-        </v-form>
-      </mCard>
-    </v-col>
   </v-container>
 </template>
 
@@ -39,7 +38,14 @@ export default {
   data: () => ({
     data: [],
     datacollection: null,
-    updateList: []
+    updateList: [],
+    labels: [],
+    offsets: [
+      { name: "hour", value: 60 * 60 },
+      { name: "day", value: 24 * 60 * 60 * 1000 },
+      { name: "week", value: 24 * 60 * 60 * 1000 * 7 },
+      { name: "month", value: 24 * 60 * 60 * 1000 * 7 * 30 }
+    ]
   }),
   mounted() {
     this.load();
@@ -54,7 +60,7 @@ export default {
   methods: {
     fillData() {
       this.datacollection = {
-        labels: this.updateList, // new Array(this.data.Temperature.length)
+        labels: this.updateList,
         datasets: [
           {
             label: "",
@@ -62,7 +68,7 @@ export default {
             scaleFontColor: "rgba(255, 255, 255, 1)",
             borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
-            data: this.data.Temperature // Array.from({ length: 10 }, () => Math.floor(Math.random() * 40))
+            data: this.data.Temperature
           }
         ]
       };
@@ -73,12 +79,25 @@ export default {
         this.data = response;
         this.$wait.end("infoS");
 
-        this.updateList = this.data.UpdatedAt.map(i => new Date(i));
+        this.labels = this.data.UpdatedAt.map(i => new Date(i));
+        this.updateList = this.labels;
 
         this.$store.state.title = params || this.name;
 
         this.fillData();
       });
+    },
+    sort(offset) {
+      var dateOffset = this.offsets.filter(i => i.name == offset)[0].value;
+
+      var myDate = new Date();
+      this.updateList = this.labels.filter(date => {
+        myDate.setTime(myDate.getTime() - dateOffset);
+
+        return date > myDate;
+      });
+
+      this.fillData();
     }
   }
 };
