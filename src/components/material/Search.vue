@@ -1,16 +1,17 @@
 <template>
-  <v-container>
-    <v-text-field
-      label="Sök"
-      prepend-inner-icon="mdi-magnify"
-      type="text"
-      flat
-      hide-details
-      @keyup="inputChange"
-      id="search"
-      v-model="search"
-    />
-  </v-container>
+  <v-text-field
+    label="Sök"
+    prepend-inner-icon="mdi-magnify"
+    type="text"
+    hide-details
+    solo
+    dense
+    background-color="green darken-2"
+    flat
+    @keyup="inputChange"
+    id="search"
+    v-model="search"
+  />
 </template>
 
 <script>

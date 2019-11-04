@@ -12,16 +12,13 @@
       </v-btn>
     </template>
 
-    <v-card>
+    <v-card class="py-2">
       <v-list>
-                <v-col cols="12">
-        <div class="text-center body-4 text-uppercase">Inställningar</div>
-        
-                </v-col cols="12">
-                
-          <v-divider class="mx-3 mb-3" />
+        <div class="text-center body-4 mb-3">INSTÄLLNINGAR</div>
+
+        <v-divider class="mx-3" />
         <v-col cols="12">
-          <div class="text-center body-2 text-uppercase">Temafärg</div>
+          <div class="text-center body-2 mb-3">TEMAFÄRG</div>
           <v-row justify-center>
             <v-btn
               v-for="i in colors"
@@ -36,14 +33,14 @@
           </v-row>
         </v-col>
 
-        <v-divider class="mx-3 mb-3" />
-        <v-col>
-          <div class="text-center body-2 text-uppercase">Lightmode / Darkmode</div>
+        <v-divider class="mx-3" />
+        <v-col cols="12">
+          <div class="text-center body-2 mb-3">LIGHTMODE / DARKMODE</div>
           <v-row justify-center>
             <v-btn
               v-for="i in modes"
               :key="i"
-              class="mx-3"
+              class="mx-2"
               :color="i"
               dark
               fab
@@ -52,7 +49,7 @@
             ></v-btn>
           </v-row>
         </v-col>
-        <v-divider class="mx-3 mb-3" />
+        <v-divider class="mx-3" />
         <v-col cols="12">
           <ShortcutList />
         </v-col>

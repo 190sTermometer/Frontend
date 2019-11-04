@@ -39,8 +39,8 @@ export default {
             },
             display: this.detailed,
             gridLines: {
-              display: false,
-              color: "rgba(255, 255, 255, 0.7)"
+              display: true,
+              color: "rgba(255, 255, 255, 0.27)"
             }
           }
         ]

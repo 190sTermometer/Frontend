@@ -49,7 +49,7 @@ export default {
         datasets: [
           {
             label: "Dataset",
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            backgroundColor: "rgba(255, 255, 255, 0.4)",
             borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
             data: this.device.Temperature

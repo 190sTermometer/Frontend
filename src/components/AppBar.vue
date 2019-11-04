@@ -42,9 +42,9 @@
           <v-list-item-title v-text="link.view" />
         </v-list-item>
 
-        <v-list-group prepend-icon="settings">
+        <v-list-group prepend-icon="settings" :color="theme">
           <template v-slot:activator>
-            <v-list-item-title :color="theme">Enheter</v-list-item-title>
+            <v-list-item-title>Enheter</v-list-item-title>
           </template>
 
           <v-list-item v-for="i in devices" :key="i.Name" link @click="changeParams(i.Name)">

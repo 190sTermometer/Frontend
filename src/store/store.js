@@ -3,6 +3,8 @@ import Vuex from "vuex";
 
 import axios from "axios";
 
+import bcrypt from "bcrypt";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -170,6 +172,15 @@ export default new Vuex.Store({
             user
           )
           .then(resp => {
+            /*
+            https://www.npmjs.com/package/bcrypt
+
+            bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+              // Store hash in your password DB.
+            });
+
+            */
+
             if (resp.data.errorMessage == null) {
               const username = user["användarnamn"];
               localStorage.setItem("username", username);

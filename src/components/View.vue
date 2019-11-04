@@ -1,6 +1,7 @@
 <template>
   <v-card class="pa-2 white" flat>
     <v-card-text>
+      <h1 class="white--text display-1">{{title}}</h1>
       <v-row class="d-flex align-content-start flex-wrap" style="margin-top: 20px;">
         <slot />
       </v-row>
@@ -20,7 +21,7 @@ export default {
   },
   computed: {
     title() {
-      return this.$store.getters.title;
+      return this.$store.getters.title.split("_").join(" ");
     }
   }
 };
