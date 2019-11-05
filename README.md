@@ -44,12 +44,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## AWS & IOT (Backend)
 ### DynamoDB - Devices
-Vilka objekt och dess egenskaper som lagras på databasen. Deras unika ID är dess MAC-address och det används sedan för att specifikt ange vilken enhet som ropas på.  
+Which objects and its traits that are stored on the database. Their MAC addres is their unique ID and it's used to specify which object to modify.
   
 *DynamoDB view*
 ![DynamoDB](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/DynamoDB.png)
 ### API Gateway - Devices
-Detta är konfiguratioen för APIn och vilka komponenter som ingår.  
+The configuration for the API and which componentes it includes.  
   
 *Deployed API*
 ![Deployed View](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/API%20deployed.png)
@@ -57,7 +57,7 @@ Detta är konfiguratioen för APIn och vilka komponenter som ingår.
 *API resource view*  
 ![Resource View](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/API%20recource%20config.png)
   
-**Förtydligande av konfiguration**
+**Clarification**
 ```
 --/device
  --- Delete remove.js (Lambda Proxy integration, MAC)
@@ -75,11 +75,11 @@ Detta är konfiguratioen för APIn och vilka komponenter som ingår.
 
 ```
 ### IOT - Devices
-Skrivet i Arduino IDE och uppladat till NodeMCU kopplat till en AM2320 sensor.   
+The script is written in Arduino IDE and is then ported to a NodeMCU that is connected to a AM2320 sensor.
 [Datablad för AM2320 sensor.](https://akizukidenshi.com/download/ds/aosong/AM2320.pdf)
 
 ### DynamoDB - Users
-Den enda skillnaden mellan 'DynamoDB - Devices' och 'DynamoDB - Users' är vilka objekt som sparas inom APIn. (I detta fall users annars devices). Users unika id är dess namn.
+The only diffirence between 'DynamoDB - Devices' and 'DynamoBD - Users' are which values that the API store. In this case it's users and the other devices. The users unique ID is their name (key: 'namn').
   
 *DynamoDB view*
 ![Dynamo user](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/User%20Dynamo.png)
@@ -90,7 +90,7 @@ Den enda skillnaden mellan 'DynamoDB - Devices' och 'DynamoDB - Users' är vilka
 ![1](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/User%20API%20resources.png)
   
 
-**Förtydligande av konfiguration**
+**Clarification**
 ```
 --/user
  --- Post createDevice.js
