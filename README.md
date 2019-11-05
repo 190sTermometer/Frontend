@@ -91,3 +91,8 @@ Den enda skillnaden mellan 'DynamoDB - Devices' och 'DynamoDB - Users' är vilka
   
 
 **Förtydligande av konfiguration**
+```
+--/user
+ --- Post createDevice.js
+ --- Get getDevice.js (Lambda Proxy integration, password & namn)
+```
