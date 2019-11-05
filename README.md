@@ -1,4 +1,4 @@
-# Termometer
+# Termometer projekt - I hetaste laget
 
 ## Project Configuration
 ### Vue (Frontend)
@@ -37,3 +37,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## AWS & IoT (Backend)
+### DynamoDB
+### API Gateway
+### IoT
+Skrivet i Arduino IDE och uppladat till NodeMCU kopplat till en AM2320 sensor.
