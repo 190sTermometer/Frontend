@@ -79,4 +79,15 @@ Skrivet i Arduino IDE och uppladat till NodeMCU kopplat till en AM2320 sensor.
 [Datablad för AM2320 sensor.](https://akizukidenshi.com/download/ds/aosong/AM2320.pdf)
 
 ### DynamoDB - Users
+Den enda skillnaden mellan 'DynamoDB - Devices' och 'DynamoDB - Users' är vilka objekt som sparas inom APIn. (I detta fall users annars devices). Users unika id är dess namn.
+  
+*DynamoDB view*
+![Dynamo user](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/User%20Dynamo.png)
 ### API Gateway - Users
+*Deployed API*
+![2](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/User%20API%20stage.png)
+*API resource view*  
+![1](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/User%20API%20resources.png)
+  
+
+**Förtydligande av konfiguration**
