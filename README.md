@@ -44,12 +44,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## AWS & IOT (Backend)
 ### DynamoDB - Devices
-Which objects and its traits that are stored on the database. Their MAC addres is their unique ID and it's used to specify which object to modify.
+Which objects and its traits that are stored on the database. Their MAC addres is their unique ID and it's used to specify which object to modify or call.
   
 *DynamoDB view*
 ![DynamoDB](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/DynamoDB.png)
 ### API Gateway - Devices
-The configuration for the API and which componentes it includes.  
+The configuration for the API and which lambda functions it includes.  
   
 *Deployed API*
 ![Deployed View](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/API%20deployed.png)
