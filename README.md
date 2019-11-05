@@ -4,8 +4,25 @@
 This project contains a website (Vue), cloud database (AWS) and one or more IOT (NodeMCU) devices which uploads data to a cloud service.    
   
 The IOT device is connected to a AM2320 sensor which measure both temperature and humidity. The IOT device then pushes it's measurements to the cloud where they are stored under uniqe IDs (MAC ID). The website (Vue) then pulls this information from the cloud to then be shown as graphs on the website. The website also has a user function which uses a diffirent database for storing it's users.  
+### To think about!
+**IOT**  
+The IOT devices must be registered and given a specific update frequency, using the key 'updateInterval' in order for the connection to the cloud to function. The IOT device then every x (insert updateInterval) seconds takes a measurement and pushes it to the database through a PUT function.  
+**Vue**  
+In order for the Vue project to work read "Vue (Frontend) and enter the given commands into the console.  
+**AWS**  
+When creating and registering a device:
+- Create a device using a unique MAC address (the same address as in the script for your IOT device).  
+- Register the device using the MAC address of the object you want to register.
+  - When registering enter the device name using key 'name'.
+  - The owner of the device using the key 'owner'.
+  - The wished update frequense (in seconds) using the key 'updateInterval'. *(It is possible to change this value later)*
+- Done    
   
-The IOT devices must be registered and given a specific update frequency, using the key 'updateInterval' in order for the connection to the cloud to function. The IOT device then every x (insert updateInterval) seconds takes a measurement and pushes it to the database through a PUT function.
+When updating the update frequency:  
+- Enter the MAC address of the device as a query string.
+- Send along the whised new value with the key 'updateInterval'.
+- Restart the IOT device.
+- Done
 ## Project Configuration
 ### Vue (Frontend)
 **Project setup**
