@@ -39,5 +39,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## AWS & IoT (Backend)
 ### DynamoDB
 ### API Gateway
+Detta är konfiguratioen för APIn och vilka komponenter som ingår.
 ### IoT
-Skrivet i Arduino IDE och uppladat till NodeMCU kopplat till en AM2320 sensor.
+Skrivet i Arduino IDE och uppladat till NodeMCU kopplat till en AM2320 sensor.   
+[Datablad för AM2320 sensor.](https://akizukidenshi.com/download/ds/aosong/AM2320.pdf)
