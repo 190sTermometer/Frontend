@@ -1,5 +1,11 @@
 # Termometer projekt - I hetaste laget
-
+## Project Overview
+### Description
+This project contains a website (Vue), cloud database (AWS) and one or more IOT (NodeMCU) devices which uploads data to a cloud service.    
+  
+The IOT device is connected to a AM2320 sensor which measure both temperature and humidity. The IOT device then pushes it's measurements to the cloud where they are stored under uniqe IDs (MAC ID). The website (Vue) then pulls this information from the cloud to then be shown in graphs on the website.  
+  
+The IOT devices must be registered and given a specific update frequency in order for the connection to the cloud to function.
 ## Project Configuration
 ### Vue (Frontend)
 **Project setup**
