@@ -38,7 +38,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## AWS & IOT (Backend)
 ### DynamoDB
-Vilka objekt och dess egenskaper som lagras på databasen. Deras unika ID är dess MAC-address och det används sedan för att specifikt ange vilken enhet som ropas på.
+Vilka objekt och dess egenskaper som lagras på databasen. Deras unika ID är dess MAC-address och det används sedan för att specifikt ange vilken enhet som ropas på.  
+  
+*DynamoDB view*
+![DynamoDB](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/DynamoDB.png)
 ### API Gateway
 Detta är konfiguratioen för APIn och vilka komponenter som ingår.  
   
