@@ -82,7 +82,7 @@ The only diffirence between 'DynamoDB - Devices' and 'DynamoBD - Users' are whic
   
 # Vue
   
-##Project setup##
+## Project setup
   
 You can enter the following commands in the therminal showed in the picture. To open the terminal you right-click on the on the Frontend folder in the explorer.
 
