@@ -79,31 +79,42 @@ The only diffirence between 'DynamoDB - Devices' and 'DynamoBD - Users' are whic
  --- Post createDevice.js
  --- Get getDevice.js (Lambda Proxy integration, password & namn)
 ```
-
+  
 # Vue
-
-
+  
 **Project setup**
+  
+You can enter the following commands in the therminal showed in the picture. To open the terminal you right-click on the on the Frontend folder in the explorer.
+
+*The terminal*
+![](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/terminal.PNG)
+
+For easy axess there's a folder in the explorer with buttons to perform the most common commands.
+
+*The shortcut folder*
+![](https://github.com/190sTermometer/Images/blob/master/ImageReadMe/npm_scripts.PNG)
+  
 ```
 npm install
 ```
-
+  
 **Compiles and hot-reloads for development**
 ```
 npm run serve
 ```
-
+  
 **Compiles and minifies for production**
 ```
 npm run build
 ```
-
+  
 **Run your tests**
 ```
 npm run test
 ```
-
+  
 **Lints and fixes files**  
 ```
 npm run lint
 ```
+  
