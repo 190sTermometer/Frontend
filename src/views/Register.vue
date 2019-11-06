@@ -82,7 +82,7 @@ export default {
       };
       this.$store
         .dispatch("register", data)
-        .then(() => {
+        .then(response => {
           this.$toast(response);
           this.$router.push("/");
         })

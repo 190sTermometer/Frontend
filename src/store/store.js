@@ -189,10 +189,8 @@ export default new Vuex.Store({
         commit("auth_request");
         axios
           .post(
-            "https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user?username=" +
-              clientUser.username +
-              "&password=" +
-              clientUser.password
+            "https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user",
+            { namn: clientUser.username, password: clientUser.password }
           )
           .then(resp => {
             if (resp.data.errorMessage == null) {
