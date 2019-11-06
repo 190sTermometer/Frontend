@@ -1,10 +1,10 @@
 <template>
-  <v-card v-bind="$attrs" v-on="$listeners" class="s-offsetbox">
+  <v-card class="s-offsetbox">
     <v-card
       v-if="!$slots.offset"
       :color="theme"
-      :elevation="elevation"
-      class="v-card--material__header d-flex align-center s-offset"
+      :elevation="10"
+      class="d-flex align-center s-offset"
       dark
       min-height="80"
     >
@@ -33,36 +33,14 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "mCard",
 
-  inheritAttrs: false,
-
   props: {
-    color: {
-      type: String,
-      default: "secondary"
-    },
-    elevation: {
-      type: [Number, String],
-      default: 10
-    },
-    inline: {
-      type: Boolean,
-      default: false
-    },
-    fullWidth: {
-      type: Boolean,
-      default: false
-    },
-    offset: {
-      type: [Number, String],
-      default: 24
-    },
     title: {
       type: String,
-      default: undefined
+      default: "Title"
     },
     text: {
       type: String,
-      default: undefined
+      default: "Text"
     }
   },
 

@@ -1,6 +1,6 @@
 <template>
-  <v-container fill-height fluid>
-    <v-col md="6">
+  <div>
+    <v-col cols="12" md="6">
       <mCard :color="theme" title="Logga in" text="Logga in...">
         <v-form>
           <v-row>
@@ -10,6 +10,7 @@
                 v-model="username"
                 prepend-icon="person"
                 type="text"
+                :color="theme"
               />
             </v-col>
 
@@ -19,6 +20,7 @@
                 v-model="password"
                 prepend-icon="lock"
                 type="password"
+                :color="theme"
               />
             </v-col>
           </v-row>
@@ -30,17 +32,18 @@
         </v-form>
       </mCard>
     </v-col>
-  </v-container>
+  </div>
 </template>
 
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import mCard from "@/components/material/card";
 
 export default {
   name: "Login",
   components: {
-    mCard: () => import("@/components/material/card")
+    mCard
   },
   data: () => ({
     username: "",
@@ -52,8 +55,12 @@ export default {
       let password = this.password;
       this.$store
         .dispatch("login", { username, password })
-        .then(() => this.$router.push("/"))
-        .catch(err => console.log(err));
+        .then(response => {
+          this.$toast(response);
+
+          this.$router.push("/");
+        })
+        .catch(err => this.$toast(err));
     }
   },
   mounted() {

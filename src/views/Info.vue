@@ -1,20 +1,31 @@
 <template>
   <v-container>
     <Loader v-if="$wait.any" />
-    <CoreView v-if="!$wait.any" :name="this.data.Name" :class="theme">
+    <CoreView v-if="!$wait.any" :name="this.device.name" :class="theme">
       <v-col md="6" fluid>
-        <Chart detailed :chart-data="datacollection" />
-        <!-- Ladda om sidan om chart ändrar storlek -->
+        <Chart style="z-index: -1111" detailed :chart-data="datacollection" />
       </v-col>
       <v-col md="6" fluid>
-        <SimonMap></SimonMap>
+        <SimonMap />
       </v-col>
-      <v-col>
-        <h1
-          class="white--text title"
-        >Senaste temperaturen: {{data.Temperature[data.Temperature.length - 1]}}</h1>
+      <v-col cols="6">
+        <h1 class="white--text title">Senaste temperaturen: {{getLatestTemp}}</h1>
+        <h1 class="white--text title">Senaste luftfuktighet: {{getLatestHum}}</h1>
       </v-col>
-      <v-btn v-for="i in offsets" :key="i.name" @click="sort(i.name)">{{i.name}}</v-btn>
+      <v-col cols="6">
+        <v-select
+          v-model="defaultSelected"
+          :items="offsets"
+          item-text="name"
+          item-value="value"
+          label="Sortering"
+          solo
+          dark
+          filled
+          flat
+          @change="sort"
+        ></v-select>
+      </v-col>
     </CoreView>
   </v-container>
 </template>
@@ -36,21 +47,44 @@ export default {
     name: String
   },
   data: () => ({
-    data: [],
     datacollection: null,
+    device: {},
+    initLabels: [],
     updateList: [],
-    labels: [],
+    defaultSelected: { name: "Month", value: 24 * 60 * 60 * 1000 * 7 * 30 },
     offsets: [
-      { name: "hour", value: 60 * 60 },
-      { name: "day", value: 24 * 60 * 60 * 1000 },
-      { name: "week", value: 24 * 60 * 60 * 1000 * 7 },
-      { name: "month", value: 24 * 60 * 60 * 1000 * 7 * 30 }
+      { name: "Hour", value: 60 * 60 },
+      { name: "Day", value: 24 * 60 * 60 * 1000 },
+      { name: "Week", value: 24 * 60 * 60 * 1000 * 7 },
+      { name: "Month", value: 24 * 60 * 60 * 1000 * 7 * 30 }
     ]
   }),
   mounted() {
-    this.load();
+    this.loadValues();
+
+    setInterval(() => {
+      // this.$wait.start("home");
+      this.$store.dispatch("getKnownDevices").then(() => {
+        // this.$wait.end("home");
+      });
+      this.loadValues();
+    }, (this.device.updateInterval / 2) * 1000);
   },
   computed: {
+    getLatestTemp() {
+      try {
+        return this.device.latestData.temperature;
+      } catch (e) {
+        return e;
+      }
+    },
+    getLatestHum() {
+      try {
+        return this.device.latestData.humidity;
+      } catch (e) {
+        return e;
+      }
+    },
     ...mapGetters(["theme", "colors"])
   },
   beforeRouteUpdate(to, from, next) {
@@ -68,36 +102,52 @@ export default {
             scaleFontColor: "rgba(255, 255, 255, 1)",
             borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
-            data: this.data.Temperature
+            data: this.device.data.map(i => {
+              return i.temperature;
+            })
+          },
+          {
+            label: "",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            scaleFontColor: "rgba(255, 255, 255, 1)",
+            borderColor: "rgba(255, 255, 255, 1)",
+            borderWidth: 2,
+            data: this.device.data.map(i => {
+              return i.temperature;
+            })
           }
         ]
       };
     },
-    load(to = null, params = null) {
-      this.$wait.start("infoS");
-      this.$store.dispatch("getDevice", params || this.name).then(response => {
-        this.data = response;
-        this.$wait.end("infoS");
+    loadValues() {
+      this.initLabels = [];
+      this.updateList = [];
 
-        this.labels = this.data.UpdatedAt.map(i => new Date(i));
-        this.updateList = this.labels;
-
-        this.$store.state.title = params || this.name;
-
-        this.fillData();
+      this.$store.state.knownDevices.forEach(device => {
+        if (device.name == this.name) {
+          this.device = device;
+        }
       });
+
+      this.device.data.forEach(i => {
+        this.initLabels.push(i.time);
+        this.updateList.push(i.time);
+      });
+
+      this.$store.state.title = this.name;
+
+      this.fillData();
     },
     sort(offset) {
-      var dateOffset = this.offsets.filter(i => i.name == offset)[0].value;
-
       var myDate = new Date();
-      this.updateList = this.labels.filter(date => {
-        myDate.setTime(myDate.getTime() - dateOffset);
+      /*console.log(this.initLabels);
+      this.updateList = this.initLabels.filter(date => {
+        myDate.setTime(myDate.getTime() - offset);
 
         return date > myDate;
       });
 
-      this.fillData();
+      this.fillData();*/
     }
   }
 };

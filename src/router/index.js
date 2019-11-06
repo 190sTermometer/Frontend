@@ -12,6 +12,11 @@ function route(path, view, name, props = false) {
   };
 }
 
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};
+
 Vue.use(Router);
 
 let router = new Router({

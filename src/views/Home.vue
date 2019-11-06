@@ -1,12 +1,15 @@
 <template>
-  <v-container>
+  <div>
     <Loader v-if="$wait.any" />
     <CoreView v-if="!$wait.any" :class="mode">
-      <v-col v-for="item in filteredList" :key="item.Name" cols="4">
-        <TempCard :device="item" />
-      </v-col>
+      <v-row v-if="filteredList.length > 0">
+        <TempCard v-for="item in filteredList" :key="item.Name" :device="item" />
+      </v-row>
+      <v-row v-else>
+        <p>Nope</p>
+      </v-row>
     </CoreView>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -22,9 +25,9 @@ export default {
   mounted() {},
   computed: {
     filteredList() {
-      console.log(this.$store.getters.knownDevices);
       return this.$store.getters.knownDevices.filter(device => {
-        return device.Name.toLowerCase()
+        return device.name
+          .toLowerCase()
           .split("_")
           .join(" ")
           .includes(this.$store.state.search.toLowerCase());

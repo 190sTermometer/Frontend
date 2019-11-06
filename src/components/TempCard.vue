@@ -1,20 +1,22 @@
 <template>
-  <v-card
-    dark
-    href="#"
-    :class="theme"
-    @mouseover="hover = true"
-    @mouseleave="hover = false"
-    :to="'/info/' + this.device.Name"
-  >
-    <v-card-title>
-      <span class="title">{{getName()}}</span>
-    </v-card-title>
-    <v-card-text>
-      <span class="body-2 white--text">{{getTemperature()}}</span>
-    </v-card-text>
-    <Chart :height="200" :chartData="datacollection" />
-  </v-card>
+  <v-col cols="4">
+    <v-card
+      dark
+      href="#"
+      :class="theme"
+      @mouseover="hover = true"
+      @mouseleave="hover = false"
+      :to="'/info/' + this.device.name"
+    >
+      <v-card-title>
+        <span class="title">{{getName()}}</span>
+      </v-card-title>
+      <v-card-text>
+        <span class="body-2 white--text">{{getTemperature()}}</span>
+      </v-card-text>
+      <Chart :height="200" :chartData="datacollection" />
+    </v-card>
+  </v-col>
 </template>
 
 <script>
@@ -44,26 +46,39 @@ export default {
   },
   methods: {
     fillData() {
+      this.device.data = this.device.data.filter(i => {
+        return typeof i !== "string";
+      });
+
       this.datacollection = {
-        labels: Array(this.device.Temperature.length),
+        labels: new Array(this.device.data.length),
         datasets: [
           {
             label: "Dataset",
-            backgroundColor: "rgba(255, 255, 255, 0.4)",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
             borderColor: "rgba(255, 255, 255, 1)",
             borderWidth: 2,
-            data: this.device.Temperature
+            data: this.device.data.map(i => {
+              return i.temperature;
+            })
+          },
+          {
+            label: "Dataset",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            borderColor: "rgba(255, 255, 255, 1)",
+            borderWidth: 2,
+            data: this.device.data.map(i => {
+              return i.humidity;
+            })
           }
         ]
       };
     },
     getName() {
-      return this.device.Name.split("_").join(" ");
+      return this.device.name.split("_").join(" ");
     },
     getTemperature() {
-      return `${
-        this.device.Temperature[this.device.Temperature.length - 1]
-      }°C / ${this.device.Humidity[this.device.Humidity.length - 1]}%`;
+      return `${this.device.data[this.device.data.length - 1].temperature}°C / ${this.device.data[this.device.data.length - 1].humidity}%`;
     }
   },
   components: {

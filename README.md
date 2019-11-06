@@ -1,35 +1,17 @@
 # Termometer
 
-## Project setup
+Demo [här](https://190stermometer.github.io/Frontend/)
+<br />
+(https://190stermometer.github.io/Frontend/)
 
-```
-npm install
-```
+# Backend
 
-### Compiles and hot-reloads for development
+## AWS
 
-```
-npm run serve
-```
+### DynamoDB
 
-### Compiles and minifies for production
+### API Gateway
 
-```
-npm run build
-```
+### IoT-enheten
 
-### Run your tests
-
-```
-npm run test
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+IoT-enheten består av en AM2320 sensor kopplat till en NodeMCU.

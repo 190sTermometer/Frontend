@@ -69,7 +69,7 @@ export default {
     mode() {
       return this.$store.getters.mode;
     },
-    ...mapGetters(["theme", "colors", "modes"])
+    ...mapGetters(["theme", "colors", "modes", "mode"])
   },
   created() {},
   data: () => ({
@@ -84,6 +84,13 @@ export default {
       let key = event.key;
       if (key == "i") {
         this.open = !this.open;
+      }
+      if (key == "d") {
+        if (this.$store.state.mode == "grey darken-3") {
+          this.setMode(this.$store.state.modes[1]);
+        } else if (this.$store.state.mode == "grey lighten-5") {
+          this.setMode(this.$store.state.modes[0]);
+        }
       }
       if (key <= max && key != "0") {
         this.setTheme(this.$store.state.colors[key - 1]);

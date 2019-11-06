@@ -35,12 +35,16 @@ export default {
         key: "i"
       },
       h: {
-        text: "Visa Home",
-        key: "h"
+        text: "Visa profilinställningar",
+        key: "p"
       },
       themeSwitcher: {
         text: "Swich theme",
         key: "(numbers)"
+      },
+      darkmodeToggle: {
+        text: "Darkmode / Lightmode toggle",
+        key: "d"
       }
     }
   }),

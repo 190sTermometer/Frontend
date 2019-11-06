@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <v-app-bar app fixed clipped-left dark :color="theme">
       <v-app-bar-nav-icon @click="toggleDrawer()" />
 
@@ -18,17 +18,22 @@
     </v-app-bar>
     <v-navigation-drawer
       id="app-drawer"
-      src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg"
       app
+      src="https://images.template.net/wp-content/uploads/2017/01/14180026/Web-Background-Pattern.jpg"
       clipped
-      :color="mode"
+      :color="theme"
       dark
       floating
       stateless
       v-model="drawer"
     >
       <template v-slot:img="attrs">
-        <v-img v-bind="attrs" gradient="to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)" />
+        <v-img
+          v-if="mode==modes[0] "
+          v-bind="attrs"
+          gradient="to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)"
+        />
+        <v-img v-else v-bind="attrs" gradient="to top, rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)" />
       </template>
 
       <v-divider class="mx-3 mb-3" />
@@ -42,18 +47,24 @@
           <v-list-item-title v-text="link.view" />
         </v-list-item>
 
-        <v-list-group prepend-icon="settings" :color="theme">
+        <v-list-group :color="theme" prepend-icon="settings">
           <template v-slot:activator>
             <v-list-item-title>Enheter</v-list-item-title>
           </template>
 
-          <v-list-item v-for="i in devices" :key="i.Name" link @click="changeParams(i.Name)">
-            <v-list-item-title>{{getName(i.Name)}}</v-list-item-title>
+          <v-list-item
+            v-for="i in devices"
+            :key="i.name"
+            :active-class="theme"
+            link
+            @click="changeParams(i.name)"
+          >
+            <v-list-item-title>{{getName(i.name)}}</v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -70,7 +81,6 @@ import Search from "./material/Search";
 export default {
   data: () => ({
     hover: false,
-    links: [],
     fav: true,
     menu: false,
     message: false,
@@ -79,12 +89,12 @@ export default {
     drawer: true
   }),
   mounted() {
-    this.links = paths.filter(i => i.visible == true);
-
     this.$wait.start("home");
     this.$store.dispatch("getKnownDevices").then(() => {
       this.$wait.end("home");
     });
+
+    console.log("Omladdad");
   },
   components: { Settings, ProfileSettings, Search },
   computed: {
@@ -95,6 +105,7 @@ export default {
       };
     },
     devices() {
+      console.log(this.$store.getters.knownDevices);
       return this.$store.getters.knownDevices;
     },
     color() {
@@ -103,6 +114,13 @@ export default {
     mode() {
       return this.$store.getters.mode;
     },
+    links() {
+      return paths.filter(
+        i =>
+          i.visible &&
+          (i.login == !!this.$store.state.username || i.login == null)
+      );
+    },
     ...mapGetters([
       "theme",
       "colors",
@@ -110,7 +128,8 @@ export default {
       "isLoggedIn",
       "authStatus",
       "mode",
-      "modes"
+      "modes",
+      "olle"
     ])
   },
   methods: {
@@ -125,6 +144,10 @@ export default {
     },
     changeParams(param) {
       this.$router.push({ name: "Info", params: { name: param } });
+    },
+    forceUppdatering() {
+      this.$forceUpdate();
+      console.log("adaassa");
     },
     ...mapMutations(["setTheme"])
   }

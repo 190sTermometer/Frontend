@@ -6,7 +6,7 @@
     hide-details
     solo
     dense
-    background-color="green darken-2"
+    :background-color="theme + ' darken-1'"
     flat
     @keyup="inputChange"
     id="search"
@@ -30,7 +30,7 @@ export default {
     ...mapMutations(["setTheme"]),
     inputChange(e) {
       this.$store.state.search = this.search;
-      console.log(this.search);
+      this.$router.push("/");
     }
   }
 };

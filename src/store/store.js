@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 import axios from "axios";
 
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 Vue.use(Vuex);
 
@@ -11,7 +11,6 @@ export default new Vuex.Store({
   state: {
     status: "",
     username: localStorage.getItem("username") || "",
-
     unknownDevices: [],
     knownDevices: [],
     currentDevice: null,
@@ -20,17 +19,30 @@ export default new Vuex.Store({
     search: "",
     theme: "secondary",
     colors: [
-      "primary",
-      "secondary",
-      "tertiary",
-      "error",
-      "info",
-      "success warning"
+      "primary", // Blå
+      "secondary", // Grön
+      "tertiary", // Grå
+      "error", // Röd
+      "info", // Ljusblå
+      "success warning" // Orange
     ],
     mode: "grey darken-3",
     modes: [
       "grey darken-3", // Darkmode
       "grey lighten-5" // Lightmode
+    ],
+    olle: "https://randomuser.me/api/portraits/men/56.jpg",
+    olleBilder: [
+      "https://randomuser.me/api/portraits/men/54.jpg",
+      "https://randomuser.me/api/portraits/men/55.jpg",
+      "https://randomuser.me/api/portraits/men/56.jpg",
+      "https://randomuser.me/api/portraits/men/57.jpg",
+      "https://randomuser.me/api/portraits/men/58.jpg",
+      "https://randomuser.me/api/portraits/women/54.jpg",
+      "https://randomuser.me/api/portraits/women/55.jpg",
+      "https://randomuser.me/api/portraits/women/56.jpg",
+      "https://randomuser.me/api/portraits/women/57.jpg",
+      "https://randomuser.me/api/portraits/women/58.jpg"
     ]
   },
   mutations: {
@@ -43,8 +55,8 @@ export default new Vuex.Store({
     getDevice(state, device) {
       state.currentDevice = device;
     },
-    setDrawer(state, val) {
-      state.drawer = val;
+    setProfilePicture(state, url) {
+      state.olle = url;
     },
     removeDevice(state, macAddress) {
       let knownDevices = state.knownDevices,
@@ -73,6 +85,11 @@ export default new Vuex.Store({
     setMode(state, mode) {
       state.mode = mode;
     },
+    olleFunc(state, o) {
+      state.olle = o;
+      console.log(o);
+      console.log(state.olle);
+    },
     auth_request(state) {
       state.status = "loading";
     },
@@ -89,17 +106,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getUnknownDevices: ({ commit }) => {},
+    getUnknownDevices: () => {},
     getKnownDevices: ({ commit }) => {
       return new Promise(resolve => {
         let data = "";
         // https://fxcixo3b0e.execute-api.us-east-1.amazonaws.com/vibecheck/device
         axios
           .get(
-            "https://y6ituq9hnf.execute-api.us-east-1.amazonaws.com/test/device/data?allData=true"
+            "https://fxcixo3b0e.execute-api.us-east-1.amazonaws.com/vibecheck/device"
           )
           .then(response => {
             data = response.data.Items.Items;
+            console.log(data);
             commit("getKnownDevices", data);
             resolve(data);
           })
@@ -114,7 +132,7 @@ export default new Vuex.Store({
 
         axios
           .get(
-            "https://y6ituq9hnf.execute-api.us-east-1.amazonaws.com/test/device/data?name=" +
+            "https://y6ituq9hnf.execute-api.us-east-1.amazonaws.com/test/device/data?mac=" +
               macAddress
           )
           .then(response => {
@@ -127,82 +145,81 @@ export default new Vuex.Store({
           });
       });
     },
-    login({ commit }, user) {
+    login({ commit }, clientUser) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios
           .get("https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user")
           .then(resp => {
-            let currentUser = null;
+            let userFound = false;
 
             resp = resp.data.Item.Items;
-            resp.forEach(u => {
+            resp.forEach(serverUser => {
               if (
-                u["användarnamn"] == user.username &&
-                u["lösenord"] == user.password
+                serverUser.username == clientUser.username &&
+                serverUser.password == clientUser.password
               ) {
-                currentUser = u;
+                userFound = true;
               }
             });
 
-            if (currentUser != null) {
-              const username = currentUser["användarnamn"];
+            if (userFound == true) {
+              localStorage.setItem("username", clientUser.username);
 
-              localStorage.setItem("username", username);
-
-              commit("auth_success", username);
-              resolve(resp);
+              commit("auth_success", clientUser.username);
+              resolve("Logged in");
             } else {
-              commit("auth_error");
               localStorage.removeItem("username");
-              reject("Wrong password");
+
+              commit("auth_error");
+              reject("Wrong password (¬_¬ )");
             }
           })
-          .catch(err => {
-            reject(err);
+          .catch(() => {
+            reject("Error try again");
           });
       });
     },
-    register({ commit }, user) {
+    register({ commit }, clientUser) {
       return new Promise((resolve, reject) => {
+        bcrypt.hash(clientUser.password, 10, (err, hash) => {
+          clientUser.password = hash;
+        });
+
         commit("auth_request");
         axios
           .post(
-            "https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user",
-            user
+            "https://3v3ght50c8.execute-api.us-east-1.amazonaws.com/a1/user?username=" +
+              clientUser.username +
+              "&password=" +
+              clientUser.password
           )
           .then(resp => {
-            /*
-            https://www.npmjs.com/package/bcrypt
-
-            bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-              // Store hash in your password DB.
-            });
-
-            */
-
             if (resp.data.errorMessage == null) {
-              const username = user["användarnamn"];
-              localStorage.setItem("username", username);
-              commit("auth_success", username);
-              resolve(resp);
+              localStorage.setItem("username", clientUser.username);
+
+              commit("auth_success", clientUser.username);
+              resolve("Logged in");
             } else {
-              commit("auth_error", "Error nop");
               localStorage.removeItem("username");
-              reject("ERRORR");
+
+              commit("auth_error");
+              reject("Try again");
             }
           })
-          .catch(err => {
-            commit("auth_error", err);
+          .catch(e => {
             localStorage.removeItem("username");
-            reject(err);
+
+            commit("auth_error");
+            reject("Try again - " + e);
           });
       });
     },
     logout({ commit }) {
-      return new Promise((resolve, reject) => {
-        commit("logout");
+      return new Promise(resolve => {
         localStorage.removeItem("username");
+
+        commit("logout");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
@@ -210,15 +227,7 @@ export default new Vuex.Store({
   },
   getters: {
     unknownDevices: state => state.unknownDevices,
-    knownDevices: state =>
-      state.knownDevices.filter(
-        i =>
-          i.Temperature.length > 3 &&
-          i.Temperature.reduce((a, b) => a + b, 0) / i.Temperature.length >
-            10 &&
-          /^[ -~\t\n\r]+$/.test(i.Name) &&
-          !i.Temperature.includes(0)
-      ),
+    knownDevices: state => state.knownDevices,
     currentDevice: state => state.currentDevice,
     title: state => state.title,
     theme: state => state.theme,
@@ -229,6 +238,8 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.username,
     authStatus: state => state.status,
     username: state => state.username,
-    search: state => state.search
+    search: state => state.search,
+    olleBilder: state => state.olleBilder,
+    olle: state => state.olle
   }
 });

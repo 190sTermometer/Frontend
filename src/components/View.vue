@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapMutations, mapState, mapGetters } from "vuex";
+
 export default {
   name: "CoreView",
   props: {
@@ -22,7 +24,15 @@ export default {
   computed: {
     title() {
       return this.$store.getters.title.split("_").join(" ");
-    }
+    },
+    ...mapGetters([
+      "theme",
+      "colors",
+      "modes",
+      "mode",
+      "snackbar",
+      "snackbarText"
+    ])
   }
 };
 </script>

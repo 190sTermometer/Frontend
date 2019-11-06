@@ -7,10 +7,13 @@
     v-model="open"
   >
     <template v-slot:activator="{ on }">
+      <!-- <v-avatar :color="theme" fab v-on="on">
+        <v-img
+          src=""
+        ></v-img>
+      </v-avatar>-->
       <v-btn class="mx-2" :color="theme" fab dark depressed v-on="on">
-        <v-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
-        </v-avatar>
+        <v-icon dark>mdi-account</v-icon>
       </v-btn>
     </template>
 
@@ -20,7 +23,7 @@
           <v-col>
             <v-list-item>
               <v-avatar>
-                <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                <v-img :src="olle"></v-img>
               </v-avatar>
               <v-list-item-title class="s-username">{{username}}</v-list-item-title>
             </v-list-item>
@@ -32,7 +35,7 @@
           </v-col>
         </div>
         <div v-else>
-          <v-col>
+          <v-col class="d-flex justify-space-between">
             <v-btn :color="theme" depressed to="/login">Login</v-btn>
             <v-btn :color="theme" depressed to="/register">Register</v-btn>
           </v-col>
@@ -51,7 +54,14 @@ export default {
     mode() {
       return this.$store.getters.mode;
     },
-    ...mapGetters(["theme", "colors", "isLoggedIn", "username"])
+    ...mapGetters([
+      "theme",
+      "colors",
+      "isLoggedIn",
+      "username",
+      "olle",
+      "olleBilder"
+    ])
   },
   data: () => ({
     open: false

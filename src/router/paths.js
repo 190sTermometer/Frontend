@@ -11,21 +11,24 @@ export default [
     name: "Login",
     view: "Login",
     icon: "person",
-    visible: true
+    visible: true,
+    login: false
   },
   {
     path: "/register",
     name: "Register",
     view: "Register",
     icon: "person",
-    visible: true
+    visible: true,
+    login: false
   },
   {
     path: "/User",
     name: "Användare",
     view: "User",
     icon: "person",
-    visible: true
+    visible: true,
+    login: true
   },
   {
     path: "/info/:name",
