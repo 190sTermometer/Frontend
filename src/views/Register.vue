@@ -88,7 +88,6 @@ export default {
         })
         .catch(err => {
           this.$toast(err);
-          console.log(err);
         });
     },
     ...mapMutations(["olleFunc"])

@@ -23,10 +23,10 @@ export default {
   props: {},
   data: () => ({
     zoom: 16,
-    center: [59.638857, 16.589688],
-    url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+    center: [59.638627, 16.590126],
+    url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution: "",
-    marker: latLng(59.638857, 16.589688)
+    marker: latLng(59.638627, 16.590126)
   }),
   computed: {},
   mounted() {

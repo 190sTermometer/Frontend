@@ -63,11 +63,8 @@ export default {
     this.loadValues();
     this.$store.state.title = this.name;
 
-    setInterval(() => {
-      // this.$wait.start("home");
-      this.$store.dispatch("getKnownDevices").then(() => {
-        // this.$wait.end("home");
-      });
+    this.$store.state.updateIntervals = setInterval(() => {
+      this.$store.dispatch("getKnownDevices").then(() => {});
       this.loadValues();
     }, (this.device.updateInterval / 2) * 1000);
   },
@@ -139,14 +136,6 @@ export default {
     },
     sort(offset) {
       var myDate = new Date();
-      /*console.log(this.initLabels);
-      this.updateList = this.initLabels.filter(date => {
-        myDate.setTime(myDate.getTime() - offset);
-
-        return date > myDate;
-      });
-
-      this.fillData();*/
     }
   }
 };

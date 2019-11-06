@@ -17,6 +17,7 @@ export default new Vuex.Store({
     drawer: false,
     title: "",
     search: "",
+    updateIntervals: null,
     theme: "secondary",
     colors: [
       "primary", // Blå
@@ -87,8 +88,6 @@ export default new Vuex.Store({
     },
     olleFunc(state, o) {
       state.olle = o;
-      console.log(o);
-      console.log(state.olle);
     },
     auth_request(state) {
       state.status = "loading";
@@ -117,7 +116,6 @@ export default new Vuex.Store({
           )
           .then(response => {
             data = response.data.Items.Items;
-            console.log(data);
             commit("getKnownDevices", data);
             resolve(data);
           })
@@ -154,9 +152,11 @@ export default new Vuex.Store({
             let userFound = false;
 
             resp = resp.data.Item.Items;
+
             resp.forEach(serverUser => {
+              var serverUsername = serverUser.name || serverUser.username;
               if (
-                serverUser.username == clientUser.username &&
+                serverUsername == clientUser.username &&
                 serverUser.password == clientUser.password
               ) {
                 userFound = true;

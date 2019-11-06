@@ -93,8 +93,6 @@ export default {
     this.$store.dispatch("getKnownDevices").then(() => {
       this.$wait.end("home");
     });
-
-    console.log("Omladdad");
   },
   components: { Settings, ProfileSettings, Search },
   computed: {
@@ -105,7 +103,6 @@ export default {
       };
     },
     devices() {
-      console.log(this.$store.getters.knownDevices);
       return this.$store.getters.knownDevices;
     },
     color() {
@@ -147,7 +144,6 @@ export default {
     },
     forceUppdatering() {
       this.$forceUpdate();
-      console.log("adaassa");
     },
     ...mapMutations(["setTheme"])
   }

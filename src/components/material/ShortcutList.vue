@@ -11,7 +11,7 @@
       </v-btn>
     </template>
     <v-card>
-      <v-list v-for="s in shortcut">
+      <v-list v-for="s in shortcut" :key="s.text">
         <span>| {{s.text}} = {{s.key}}</span>
       </v-list>
     </v-card>
@@ -53,13 +53,6 @@ export default {
   },
   mounted() {
     var max = this.$store.state.colors.length;
-    // window.onkeydown = event => {
-    //   let key = event.key;
-    //   if (key == "i") {
-    //     console.log("ddd");
-    //     this.open = !this.open;
-    //   }
-    // };
   }
 };
 </script>

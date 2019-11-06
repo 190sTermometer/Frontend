@@ -33,6 +33,9 @@ export default {
       "snackbar",
       "snackbarText"
     ])
+  },
+  mounted() {
+    clearInterval(this.$store.state.updateIntervals);
   }
 };
 </script>
