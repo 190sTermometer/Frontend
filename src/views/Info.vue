@@ -61,6 +61,7 @@ export default {
   }),
   mounted() {
     this.loadValues();
+    this.$store.state.title = this.name;
 
     setInterval(() => {
       // this.$wait.start("home");
@@ -133,8 +134,6 @@ export default {
         this.initLabels.push(i.time);
         this.updateList.push(i.time);
       });
-
-      this.$store.state.title = this.name;
 
       this.fillData();
     },
