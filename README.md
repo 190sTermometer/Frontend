@@ -9,10 +9,7 @@ The IOT device is connected to a AM2320 sensor which measure both temperature an
 The IOT devices must be registered and given a specific update frequency, using the key 'updateInterval' in order for the connection to the cloud to function. The IOT device then every x (insert updateInterval) seconds takes a measurement and pushes it to the database through a PUT function.  
 **Vue**  
 In order for the Vue project to work read "Vue (Frontend) and enter the given commands into the console.  
- - npm run serve
- - npm run build
- - npm run lint
- 
+
 **AWS**  
 When creating and registering a device:
 - Create a device using a unique MAC address (the same address as in the script for your IOT device).  
@@ -81,4 +78,32 @@ The only diffirence between 'DynamoDB - Devices' and 'DynamoBD - Users' are whic
 --/user
  --- Post createDevice.js
  --- Get getDevice.js (Lambda Proxy integration, password & namn)
+```
+
+# Vue
+
+
+**Project setup**
+```
+npm install
+```
+
+**Compiles and hot-reloads for development**
+```
+npm run serve
+```
+
+**Compiles and minifies for production**
+```
+npm run build
+```
+
+**Run your tests**
+```
+npm run test
+```
+
+**Lints and fixes files**  
+```
+npm run lint
 ```
